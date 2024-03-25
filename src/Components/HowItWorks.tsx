@@ -19,15 +19,15 @@ const HowItWorks = () => {
 		},
 	];
 	return (
-		<section className='pt-36 pb-52'>
-			<div className='px-36'>
-				<h2 className='text-center text-8xl font-light text-gray-900 mb-20'>
+		<section className='pt-20 pb-32 lg:pt-36 lg:pb-52'>
+			<div className='px-8 lg:px-16 2xl:px-36'>
+				<h2 className='text-center text-5xl font-light text-gray-900 mb-12 md:text-8xl md:mb-20'>
 					How it Works
 				</h2>
-				<div className='grid grid-cols-3 gap-8'>
+				<div className='grid lg:grid-cols-3 gap-8'>
 					{steps.map((step, i) => (
 						<div
-							className='px-20 py-11 rounded-[40px] border-2 border-emerald-950 shadow-solid flex flex-col gap-7'
+							className='p-12 md:px-20 md:py-11 rounded-[40px] border-2 border-emerald-950 shadow-solid flex flex-col gap-7'
 							key={i}
 						>
 							<div className=' h-20 w-20 bg-emerald-900 flex justify-center items-center rounded-full'>
