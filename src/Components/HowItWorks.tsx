@@ -19,11 +19,9 @@ const HowItWorks = () => {
 		},
 	];
 	return (
-		<section className='pt-20 pb-32 lg:pt-36 lg:pb-52'>
+		<section className='section'>
 			<div className='px-8 lg:px-16 2xl:px-36'>
-				<h2 className='text-center text-5xl font-light text-gray-900 mb-12 md:text-8xl md:mb-20'>
-					How it Works
-				</h2>
+				<h2>How it Works</h2>
 				<div className='grid lg:grid-cols-3 gap-8'>
 					{steps.map((step, i) => (
 						<div

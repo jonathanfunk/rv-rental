@@ -55,9 +55,9 @@ const WeekendRentals = () => {
 	console.log(rentals);
 
 	return (
-		<section className='pt-20 pb-32 lg:pt-36 lg:pb-52 lg:flex lg:items-center'>
+		<section className='section lg:flex lg:items-center'>
 			<div className='text-center mb-20 px-8 md:px-16 lg:md-0 lg:text-left lg:w-1/3 2xl:pl-36 2xl:pr-28'>
-				<h2 className=' font-light text-gray-900 mb-3 text-5xl 2xl:text-6xl'>
+				<h2 className='text-left mb-3 text-5xl 2xl:text-6xl'>
 					Book an RV {` `}
 					<br className='hidden 2xl:block' />
 					This Weekend!

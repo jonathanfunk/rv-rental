@@ -2,11 +2,9 @@ import rvOptions from '@/data/rvOptions';
 
 const RVOptions = () => {
 	return (
-		<section className='pt-20 pb-32 bg-gradient-to-br from-emerald-900 to-emerald-950 lg:pt-36 lg:pb-52'>
+		<section className='section bg-gradient-to-br from-emerald-900 to-emerald-950'>
 			<div className='px-8 lg:px-16 2xl:px-36'>
-				<h2 className='text-center text-5xl font-light text-white mb-12 md:text-8xl md:mb-20'>
-					Which RV Works for You?
-				</h2>
+				<h2 className='text-white'>Which RV Works for You?</h2>
 				<div className='grid md:grid-cols-2 lg:grid-cols-4'>
 					{rvOptions.map((option, i) => (
 						<div
