@@ -1,9 +1,9 @@
-import { Logo } from '@/Components/Icons';
+import { Logo } from '@/components/Icons';
 import Link from 'next/link';
 
 const Header = () => {
 	return (
-		<div className='py-8 px-36 fixed w-full'>
+		<div className='py-8 px-36 fixed w-full z-10'>
 			<div className=' py-3 px-5 rounded-full backdrop-blur-lg bg-white bg-opacity-80 flex justify-between items-center'>
 				<Link
 					href='/'
