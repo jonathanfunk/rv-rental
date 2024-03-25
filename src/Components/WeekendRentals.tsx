@@ -27,6 +27,27 @@ const flickityOptions = {
 	pageDots: false,
 };
 
+const getNextFriday = () => {
+	const today = new Date();
+	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+	const daysUntilFriday =
+		dayOfWeek === 5 ? 7 : dayOfWeek < 5 ? 5 - dayOfWeek : 5 + (7 - dayOfWeek);
+	const nextFriday = new Date(
+		today.getTime() + daysUntilFriday * 24 * 60 * 60 * 1000
+	);
+	return nextFriday.toISOString().split('T')[0];
+};
+
+const getNextSunday = () => {
+	const today = new Date();
+	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+	const daysUntilSunday = dayOfWeek === 0 ? 7 : 7 - dayOfWeek;
+	const nextSunday = new Date(
+		today.getTime() + daysUntilSunday * 24 * 60 * 60 * 1000
+	);
+	return nextSunday.toISOString().split('T')[0];
+};
+
 const WeekendRentals = () => {
 	const [rentals, setRentals] = useState<Rental[]>([]);
 
@@ -35,14 +56,17 @@ const WeekendRentals = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				const nextFriday = getNextFriday();
+				const nextSunday = getNextSunday();
+				console.log(nextFriday, nextSunday);
 				const response = await axios.get(`${BASE_URL}/rentals`, {
 					params: {
 						'page[limit]': 6,
 						recommended: true,
 						instant_book: true,
-					},
-					headers: {
-						Partner: process.env.PARTNER_ID,
+						'filter[keywords]': 'Top rated',
+						'date[from]': nextFriday,
+						'date[to]': nextSunday,
 					},
 				});
 				setRentals(response.data.data);
@@ -52,7 +76,6 @@ const WeekendRentals = () => {
 		};
 		fetchData();
 	}, [BASE_URL]);
-	console.log(rentals);
 
 	return (
 		<section className='section lg:flex lg:items-center'>
