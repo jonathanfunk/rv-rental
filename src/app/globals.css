@@ -10,7 +10,7 @@
 		@apply text-center text-5xl font-light text-gray-900 mb-12 md:text-8xl md:mb-20;
 	}
 	input {
-		@apply outline-none border-solid border-[1px] border-gray-200 px-6 h-14 rounded-full bg-white focus:border-gray-400;
+		@apply text-base outline-none border-solid border-[1px] border-gray-200 px-6 h-14 rounded-full bg-white focus:border-gray-400;
 	}
 }
 
