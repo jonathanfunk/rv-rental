@@ -26,6 +26,13 @@ export interface RentalCard {
 	currency: string;
 }
 
+export interface RentalList {
+	address: string;
+	startDate: string;
+	endDate: string;
+	guests: string;
+}
+
 export interface InitialState {
 	currency: string;
 }

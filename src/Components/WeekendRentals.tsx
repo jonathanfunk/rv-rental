@@ -4,7 +4,7 @@ import axios from 'axios';
 import Flickity from 'react-flickity-component';
 import 'flickity/css/flickity.css';
 import RentalCard from './RentalCard';
-import { GlobalContext } from '@/app/context/GlobalState';
+import { GlobalContext } from '@/context/GlobalState';
 import { getNextFriday, getNextSunday } from '@/lib/utils';
 import { Rental } from '@/lib/types';
 
