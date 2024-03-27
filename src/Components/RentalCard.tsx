@@ -1,16 +1,7 @@
 import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
-
-interface RentalCard {
-	title: string;
-	type: string;
-	sleeps: number;
-	city: string;
-	state: string;
-	price: number;
-	score: number;
-	image: string;
-}
+import { getCurrencySymbol } from '@/lib/utils';
+import { RentalCard } from '@/lib/types';
 
 const RentalCard = ({
 	title,
@@ -21,6 +12,7 @@ const RentalCard = ({
 	price,
 	image,
 	score,
+	currency,
 }: RentalCard) => {
 	const imageUrl = image.replace(
 		'/outdoorsy/image/upload',
@@ -42,7 +34,10 @@ const RentalCard = ({
 					{city}, {state}
 				</p>
 				<div className='flex justify-between text-gray-900 font-semibold text-2xl md:text-3xl'>
-					<p>${priceInDollars} / Night</p>
+					<p>
+						{getCurrencySymbol(currency.toUpperCase())}
+						{priceInDollars} / Night
+					</p>
 					<p className='flex'>
 						<FaStar className='text-yellow-400 mr-1' />
 						{score}

@@ -1,24 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Flickity from 'react-flickity-component';
 import 'flickity/css/flickity.css';
 import RentalCard from './RentalCard';
-
-interface Rental {
-	attributes: {
-		vehicle_title: string;
-		display_vehicle_type: string;
-		sleeps: number;
-		price_per_day: number;
-		primary_image_url: string;
-		score: number;
-		location: {
-			city: string;
-			state: string;
-		};
-	};
-}
+import { GlobalContext } from '@/app/context/GlobalState';
+import { getNextFriday, getNextSunday } from '@/lib/utils';
+import { Rental } from '@/lib/types';
 
 const flickityOptions = {
 	freeScroll: true,
@@ -27,31 +15,11 @@ const flickityOptions = {
 	pageDots: false,
 };
 
-const getNextFriday = () => {
-	const today = new Date();
-	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-	const daysUntilFriday =
-		dayOfWeek === 5 ? 7 : dayOfWeek < 5 ? 5 - dayOfWeek : 5 + (7 - dayOfWeek);
-	const nextFriday = new Date(
-		today.getTime() + daysUntilFriday * 24 * 60 * 60 * 1000
-	);
-	return nextFriday.toISOString().split('T')[0];
-};
-
-const getNextSunday = () => {
-	const today = new Date();
-	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-	const daysUntilSunday = dayOfWeek === 0 ? 7 : 7 - dayOfWeek;
-	const nextSunday = new Date(
-		today.getTime() + daysUntilSunday * 24 * 60 * 60 * 1000
-	);
-	return nextSunday.toISOString().split('T')[0];
-};
-
 const WeekendRentals = () => {
 	const [rentals, setRentals] = useState<Rental[]>([]);
-
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
+	const { state } = useContext(GlobalContext);
+	const { currency } = state;
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -67,6 +35,7 @@ const WeekendRentals = () => {
 						'filter[keywords]': 'Top rated',
 						'date[from]': nextFriday,
 						'date[to]': nextSunday,
+						currency,
 					},
 				});
 				setRentals(response.data.data);
@@ -75,7 +44,7 @@ const WeekendRentals = () => {
 			}
 		};
 		fetchData();
-	}, [BASE_URL]);
+	}, [BASE_URL, currency]);
 
 	return (
 		<section className='section lg:flex lg:items-center'>
@@ -100,6 +69,7 @@ const WeekendRentals = () => {
 							state={rental.attributes.location.state}
 							price={rental.attributes.price_per_day}
 							score={rental.attributes.score}
+							currency={rental.attributes.presentment_currency}
 						/>
 					))}
 				</Flickity>
