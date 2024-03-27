@@ -4,22 +4,21 @@ import axios from 'axios';
 import RentalCard from './RentalCard';
 import { GlobalContext } from '@/context/GlobalState';
 import { Rental } from '@/lib/types';
-import { RentalList } from '@/lib/types';
-
-const flickityOptions = {
-	freeScroll: true,
-	contain: true,
-	prevNextButtons: false,
-	pageDots: false,
-};
+import { RentalList, VehicleType } from '@/lib/types';
 
 const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 	const [rentals, setRentals] = useState<Rental[]>([]);
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
-	const { state } = useContext(GlobalContext);
+	const { state, dispatch } = useContext(GlobalContext);
 	const { currency } = state;
 
 	useEffect(() => {
+		const fetchClasses = (classes: VehicleType[]) =>
+			dispatch({ type: 'FETCH_CLASSES', payload: classes });
+		const fetchMinPrice = (minPrice: number) =>
+			dispatch({ type: 'FETCH_MIN_PRICE', payload: minPrice });
+		const fetchMaxPrice = (maxPrice: number) =>
+			dispatch({ type: 'FETCH_MAX_PRICE', payload: maxPrice });
 		const fetchData = async () => {
 			if (address && startDate && endDate && guests) {
 				try {
@@ -30,19 +29,22 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 							//'page[offset]': 3,
 							'date[from]': startDate,
 							'date[to]': endDate,
-							guests,
+							sleeps: guests,
 							currency,
 							recommended: false,
 						},
 					});
 					setRentals(response.data.data);
+					fetchClasses(response.data.meta.vehicle_types);
+					fetchMinPrice(response.data.meta.price_min);
+					fetchMaxPrice(response.data.meta.price_max);
 				} catch (error) {
 					console.error('Error fetching rental list:', error);
 				}
 			}
 		};
 		fetchData();
-	}, [BASE_URL, currency, address, startDate, endDate, guests]);
+	}, [BASE_URL, currency, address, startDate, endDate, guests, dispatch]);
 
 	return (
 		<section className='section'>

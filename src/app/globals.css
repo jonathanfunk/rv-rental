@@ -12,6 +12,9 @@
 	input {
 		@apply text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400;
 	}
+	input[type='range'] {
+		@apply border-none;
+	}
 }
 
 @layer components {

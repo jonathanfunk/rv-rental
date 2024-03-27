@@ -7,15 +7,7 @@ import Autocomplete from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
 import { formatDate } from '@/lib/utils';
 import { Map, Person } from './Icons';
-
-interface Address {
-	formatted_address: string;
-}
-
-interface DateRange {
-	startDate: Date | null;
-	endDate: Date | null;
-}
+import { Address, DateRange } from '@/lib/types';
 
 const Hero = () => {
 	const router = useRouter();
@@ -28,7 +20,7 @@ const Hero = () => {
 
 	const { startDate, endDate } = date;
 
-	const handleValueChange = (newDate: any) => {
+	const handleDateChange = (newDate: any) => {
 		setDate(newDate);
 	};
 
@@ -75,7 +67,7 @@ const Hero = () => {
 								placeholder={'Dates'}
 								containerClassName='w-full mb-4 md:mb-0 md:w-1/3 md:mr-4 relative'
 								inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
-								onChange={handleValueChange}
+								onChange={handleDateChange}
 								primaryColor={'emerald'}
 								useRange={false}
 								disabledDates={[

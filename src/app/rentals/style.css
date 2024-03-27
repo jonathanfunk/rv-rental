@@ -1,0 +1,6 @@
+.range-slider .range-slider__range {
+	@apply bg-emerald-800;
+}
+.custom-range-styles .range-slider__thumb {
+	@apply bg-emerald-900;
+}

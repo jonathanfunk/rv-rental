@@ -44,3 +44,5 @@ export const formatDate = (date: Date): string => {
 	const day = date.getDate().toString().padStart(2, '0');
 	return `${year}-${month}-${day}`;
 };
+
+export const priceInDollars = (price: number) => Math.round(price / 100);

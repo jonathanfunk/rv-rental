@@ -1,3 +1,14 @@
+export interface Address {
+	formatted_address: string;
+}
+
+export interface DateRange {
+	startDate: Date | null;
+	endDate: Date | null;
+}
+
+export type PriceRange = [number, number];
+
 export interface Rental {
 	attributes: {
 		vehicle_title: string;
@@ -35,6 +46,27 @@ export interface RentalList {
 
 export interface InitialState {
 	currency: string;
+	classes: VehicleType[];
+	minPrice: number;
+	maxPrice: number;
 }
 
-export type Action = { type: 'SET_CURRENCY'; payload: string };
+export interface VehicleType {
+	type: string;
+	label: string;
+	style: 'drivable' | 'towable' | 'both';
+}
+
+export interface PricRange {
+	type: number;
+}
+
+export interface PrevSelectedClasses {
+	[key: string]: boolean;
+}
+
+export type Action =
+	| { type: 'SET_CURRENCY'; payload: string }
+	| { type: 'FETCH_CLASSES'; payload: VehicleType[] }
+	| { type: 'FETCH_MIN_PRICE'; payload: number }
+	| { type: 'FETCH_MAX_PRICE'; payload: number };
