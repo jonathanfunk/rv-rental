@@ -38,7 +38,7 @@ export interface RentalCard {
 }
 
 export interface RentalList {
-	address: string;
+	address: string | null;
 	startDate: string;
 	endDate: string;
 	guests: string;

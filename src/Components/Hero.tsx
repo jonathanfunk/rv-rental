@@ -26,7 +26,6 @@ const Hero = () => {
 
 	const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		console.log('Date is..', date, startDate, endDate);
 		router.push(
 			`/rentals/?address=${address.formatted_address}&startdate=${startDate}&enddate=${endDate}&guests=${guests}`
 		);

@@ -10,9 +10,11 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 	const [rentals, setRentals] = useState<Rental[]>([]);
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state, dispatch } = useContext(GlobalContext);
+	const [initialFetchDone, setInitialFetchDone] = useState(false);
 	const { currency } = state;
 
 	useEffect(() => {
+		console.log('useEffect', guests);
 		const fetchClasses = (classes: VehicleType[]) =>
 			dispatch({ type: 'FETCH_CLASSES', payload: classes });
 		const fetchMinPrice = (minPrice: number) =>
@@ -20,7 +22,8 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 		const fetchMaxPrice = (maxPrice: number) =>
 			dispatch({ type: 'FETCH_MAX_PRICE', payload: maxPrice });
 		const fetchData = async () => {
-			if (address && startDate && endDate && guests) {
+			if (address !== null && !initialFetchDone) {
+				console.log('address is...', address);
 				try {
 					const response = await axios.get(`${BASE_URL}/rentals`, {
 						params: {
@@ -31,13 +34,14 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 							'date[to]': endDate,
 							sleeps: guests,
 							currency,
-							recommended: false,
+							recommended: true,
 						},
 					});
 					setRentals(response.data.data);
 					fetchClasses(response.data.meta.vehicle_types);
 					fetchMinPrice(response.data.meta.price_min);
 					fetchMaxPrice(response.data.meta.price_max);
+					setInitialFetchDone(true);
 				} catch (error) {
 					console.error('Error fetching rental list:', error);
 				}
