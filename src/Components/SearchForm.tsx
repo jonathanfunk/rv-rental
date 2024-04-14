@@ -5,7 +5,7 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import Autocomplete from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
 import RangeSlider from 'react-range-slider-input';
-import { DateRange, PrevSelectedClasses, PriceRange } from '@/lib/types';
+import { PrevSelectedClasses, PriceRange } from '@/lib/types';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { getCurrencySymbol, priceInDollars } from '@/lib/utils';

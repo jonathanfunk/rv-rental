@@ -22,21 +22,21 @@ const WeekendRentals = () => {
 	const { currency } = state;
 
 	useEffect(() => {
+		const nextFriday = getNextFriday();
+		const nextSunday = getNextSunday();
+		const params = {
+			'page[limit]': 6,
+			recommended: true,
+			instant_book: true,
+			'filter[keywords]': 'Top rated',
+			'date[from]': nextFriday,
+			'date[to]': nextSunday,
+			currency,
+		};
 		const fetchData = async () => {
 			try {
-				const nextFriday = getNextFriday();
-				const nextSunday = getNextSunday();
-				console.log(nextFriday, nextSunday);
 				const response = await axios.get(`${BASE_URL}/rentals`, {
-					params: {
-						'page[limit]': 6,
-						recommended: true,
-						instant_book: true,
-						'filter[keywords]': 'Top rated',
-						'date[from]': nextFriday,
-						'date[to]': nextSunday,
-						currency,
-					},
+					params,
 				});
 				setRentals(response.data.data);
 			} catch (error) {

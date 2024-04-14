@@ -3,13 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import RentalCard from './RentalCard';
 import { GlobalContext } from '@/context/GlobalState';
-import { Rental, RentalList, VehicleType } from '@/lib/types';
+import { RentalData, RentalListProps, VehicleType } from '@/lib/types';
 
-const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
-	const [rentals, setRentals] = useState<Rental[]>([]);
+const RentalList = ({
+	address,
+	startDate,
+	endDate,
+	guests,
+}: RentalListProps) => {
+	const [rentals, setRentals] = useState<RentalData[]>([]);
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state, dispatch } = useContext(GlobalContext);
-	const [initialFetchDone, setInitialFetchDone] = useState(false);
+	//const [initialFetchDone, setInitialFetchDone] = useState(false);
 	const { currency } = state;
 
 	useEffect(() => {
@@ -19,26 +24,29 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 			dispatch({ type: 'FETCH_MIN_PRICE', payload: minPrice });
 		const fetchMaxPrice = (maxPrice: number) =>
 			dispatch({ type: 'FETCH_MAX_PRICE', payload: maxPrice });
+
+		const params = {
+			address,
+			'page[limit]': 12,
+			//'page[offset]': 3,
+			'date[from]': startDate,
+			'date[to]': endDate,
+			sleeps: guests,
+			currency,
+			recommended: true,
+		};
 		const fetchData = async () => {
-			if (address !== null && !initialFetchDone) {
+			if (address !== null) {
+				//if (address !== null && !initialFetchDone) {
 				try {
 					const response = await axios.get(`${BASE_URL}/rentals`, {
-						params: {
-							address,
-							'page[limit]': 12,
-							//'page[offset]': 3,
-							'date[from]': startDate,
-							'date[to]': endDate,
-							sleeps: guests,
-							currency,
-							recommended: true,
-						},
+						params,
 					});
 					setRentals(response.data.data);
 					fetchClasses(response.data.meta.vehicle_types);
 					fetchMinPrice(response.data.meta.price_min);
 					fetchMaxPrice(response.data.meta.price_max);
-					setInitialFetchDone(true);
+					//setInitialFetchDone(true);
 				} catch (error) {
 					console.error('Error fetching rental list:', error);
 				}
@@ -53,7 +61,7 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 		endDate,
 		guests,
 		dispatch,
-		initialFetchDone,
+		//initialFetchDone,
 	]);
 
 	return (

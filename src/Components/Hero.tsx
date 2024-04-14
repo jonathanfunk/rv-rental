@@ -5,13 +5,12 @@ import { useRouter } from 'next/navigation';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import Autocomplete from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
-import { formatDate } from '@/lib/utils';
 import { Map, Person } from './Icons';
-import { Address, DateRange } from '@/lib/types';
+import { AddressObject, DateRange } from '@/lib/types';
 
 const Hero = () => {
 	const router = useRouter();
-	const [address, setAddress] = useState<Address>({ formatted_address: '' });
+	const [address, setAddress] = useState<AddressObject | null>(null);
 	const [guests, setGuests] = useState('');
 	const [date, setDate] = useState<DateRange>({
 		startDate: null,
@@ -26,9 +25,15 @@ const Hero = () => {
 
 	const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
-		router.push(
-			`/rentals/?address=${address.formatted_address}&startdate=${startDate}&enddate=${endDate}&guests=${guests}`
-		);
+		console.log(address);
+		let dateRangeParam = '';
+		let addressParam = address ? `address=${address.formatted_address}` : '';
+		let guestsParam = guests ? `&guests=${guests}` : '';
+		if (startDate && endDate) {
+			dateRangeParam = `&startdate=${startDate}&enddate=${endDate}`;
+		}
+
+		router.push(`/rentals/?${addressParam}${dateRangeParam}${guestsParam}`);
 	};
 
 	const key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;

@@ -3,14 +3,14 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import SearchForm from '@/components/SearchForm';
 import RentalList from '@/components/RentalList';
-import { SearchData } from '@/lib/types';
+import { SearchData, DateType, Address } from '@/lib/types';
 import './style.css';
 
 const Rental = () => {
 	const searchParams = useSearchParams();
-	const [address, setAddress] = useState<string | null>(null);
-	const [startDate, setStartDate] = useState('');
-	const [endDate, setEndDate] = useState('');
+	const [address, setAddress] = useState<Address | null>(null);
+	const [startDate, setStartDate] = useState<DateType>('');
+	const [endDate, setEndDate] = useState<DateType>('');
 	const [guests, setGuests] = useState('');
 
 	useEffect(() => {
@@ -22,6 +22,16 @@ const Rental = () => {
 
 	const handleSearchSubmit = (searchData: SearchData) => {
 		console.log(searchData);
+		const {
+			address,
+			guests,
+			date: { startDate, endDate },
+		} = searchData;
+		setAddress(address);
+		setGuests(guests);
+		setStartDate(startDate);
+		setEndDate(endDate);
+		console.log(address);
 	};
 
 	return (

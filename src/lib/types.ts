@@ -1,15 +1,24 @@
-export type Address = {
+export type AddressObject = {
 	formatted_address: string;
 };
 
+export type Address =
+	| string
+	| null
+	| {
+			formatted_address: string;
+	  };
+
+export type DateType = string | null | Date;
+
 export type DateRange = {
-	startDate: Date | null;
-	endDate: Date | null;
+	startDate: DateType;
+	endDate: DateType;
 };
 
 export type PriceRange = [number, number];
 
-export type Rental = {
+export type RentalData = {
 	attributes: {
 		vehicle_title: string;
 		display_vehicle_type: string;
@@ -37,21 +46,21 @@ export type RentalCard = {
 	currency: string;
 };
 
-export type RentalList = {
-	address: string | null;
-	startDate: string;
-	endDate: string;
+export type RentalListProps = {
+	address: Address;
+	startDate: DateType;
+	endDate: DateType;
 	guests: string;
 };
 
 export type SearchData = {
-	address: string;
+	address: Address;
 	date: {
-		startDate: string;
-		endDate: string;
+		startDate: DateType;
+		endDate: DateType;
 	};
 	guests: string;
-	range: [number, number];
+	range: PriceRange;
 	selectedClasses: {
 		[className: string]: boolean;
 	};
