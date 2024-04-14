@@ -1,15 +1,15 @@
-export interface Address {
+export type Address = {
 	formatted_address: string;
-}
+};
 
-export interface DateRange {
+export type DateRange = {
 	startDate: Date | null;
 	endDate: Date | null;
-}
+};
 
 export type PriceRange = [number, number];
 
-export interface Rental {
+export type Rental = {
 	attributes: {
 		vehicle_title: string;
 		display_vehicle_type: string;
@@ -23,9 +23,9 @@ export interface Rental {
 			state: string;
 		};
 	};
-}
+};
 
-export interface RentalCard {
+export type RentalCard = {
 	title: string;
 	type: string;
 	sleeps: number;
@@ -35,35 +35,56 @@ export interface RentalCard {
 	score: number;
 	image: string;
 	currency: string;
-}
+};
 
-export interface RentalList {
+export type RentalList = {
 	address: string | null;
 	startDate: string;
 	endDate: string;
 	guests: string;
-}
+};
 
-export interface InitialState {
+export type SearchData = {
+	address: string;
+	date: {
+		startDate: string;
+		endDate: string;
+	};
+	guests: string;
+	range: [number, number];
+	selectedClasses: {
+		[className: string]: boolean;
+	};
+};
+
+export type SearchProps = {
+	onSubmit: (data: SearchData) => void;
+	defaultAddress: string;
+	defaultStartDate: string;
+	defaultEndDate: string;
+	defaultGuests: string;
+};
+
+export type InitialState = {
 	currency: string;
 	classes: VehicleType[];
 	minPrice: number;
 	maxPrice: number;
-}
+};
 
-export interface VehicleType {
+export type VehicleType = {
 	type: string;
 	label: string;
 	style: 'drivable' | 'towable' | 'both';
-}
+};
 
-export interface PricRange {
+export type PricRange = {
 	type: number;
-}
+};
 
-export interface PrevSelectedClasses {
+export type PrevSelectedClasses = {
 	[key: string]: boolean;
-}
+};
 
 export type Action =
 	| { type: 'SET_CURRENCY'; payload: string }

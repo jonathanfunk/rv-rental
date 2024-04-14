@@ -5,15 +5,11 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import Autocomplete from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
 import RangeSlider from 'react-range-slider-input';
-import {
-	Address,
-	DateRange,
-	PrevSelectedClasses,
-	PriceRange,
-} from '@/lib/types';
+import { DateRange, PrevSelectedClasses, PriceRange } from '@/lib/types';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { getCurrencySymbol, priceInDollars } from '@/lib/utils';
+import { SearchProps } from '@/lib/types';
 import 'react-range-slider-input/dist/style.css';
 
 const SearchForm = ({
@@ -22,12 +18,12 @@ const SearchForm = ({
 	defaultStartDate,
 	defaultEndDate,
 	defaultGuests,
-}) => {
+}: SearchProps) => {
 	const { state } = useContext(GlobalContext);
 	const { currency, classes, minPrice, maxPrice } = state;
 	const currencySymbol = getCurrencySymbol(currency);
 	const [address, setAddress] = useState(defaultAddress);
-	const [date, setDate] = useState<DateRange>({
+	const [date, setDate] = useState({
 		startDate: defaultStartDate,
 		endDate: defaultEndDate,
 	});

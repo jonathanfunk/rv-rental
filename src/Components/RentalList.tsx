@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import RentalCard from './RentalCard';
 import { GlobalContext } from '@/context/GlobalState';
-import { Rental } from '@/lib/types';
-import { RentalList, VehicleType } from '@/lib/types';
+import { Rental, RentalList, VehicleType } from '@/lib/types';
 
 const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 	const [rentals, setRentals] = useState<Rental[]>([]);
@@ -14,7 +13,6 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 	const { currency } = state;
 
 	useEffect(() => {
-		console.log('useEffect', guests);
 		const fetchClasses = (classes: VehicleType[]) =>
 			dispatch({ type: 'FETCH_CLASSES', payload: classes });
 		const fetchMinPrice = (minPrice: number) =>
@@ -23,7 +21,6 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 			dispatch({ type: 'FETCH_MAX_PRICE', payload: maxPrice });
 		const fetchData = async () => {
 			if (address !== null && !initialFetchDone) {
-				console.log('address is...', address);
 				try {
 					const response = await axios.get(`${BASE_URL}/rentals`, {
 						params: {
@@ -48,7 +45,16 @@ const RentalList = ({ address, startDate, endDate, guests }: RentalList) => {
 			}
 		};
 		fetchData();
-	}, [BASE_URL, currency, address, startDate, endDate, guests, dispatch]);
+	}, [
+		BASE_URL,
+		currency,
+		address,
+		startDate,
+		endDate,
+		guests,
+		dispatch,
+		initialFetchDone,
+	]);
 
 	return (
 		<section className='section'>

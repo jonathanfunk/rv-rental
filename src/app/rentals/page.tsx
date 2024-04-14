@@ -3,11 +3,12 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import SearchForm from '@/components/SearchForm';
 import RentalList from '@/components/RentalList';
+import { SearchData } from '@/lib/types';
 import './style.css';
 
 const Rental = () => {
 	const searchParams = useSearchParams();
-	const [address, setAddress] = useState(null);
+	const [address, setAddress] = useState<string | null>(null);
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 	const [guests, setGuests] = useState('');
@@ -19,7 +20,7 @@ const Rental = () => {
 		setGuests(searchParams.get('guests') ?? '');
 	}, [searchParams]);
 
-	const handleSearchSubmit = (searchData: string) => {
+	const handleSearchSubmit = (searchData: SearchData) => {
 		console.log(searchData);
 	};
 
@@ -30,10 +31,10 @@ const Rental = () => {
 			</section>
 			<SearchForm
 				onSubmit={handleSearchSubmit}
-				defaultAddress={searchParams.get('address')}
-				defaultStartDate={searchParams.get('startdate')}
-				defaultEndDate={searchParams.get('enddate')}
-				defaultGuests={searchParams.get('guests')}
+				defaultAddress={searchParams.get('address') ?? ''}
+				defaultStartDate={searchParams.get('startdate') ?? ''}
+				defaultEndDate={searchParams.get('enddate') ?? ''}
+				defaultGuests={searchParams.get('guests') ?? ''}
 			/>
 			<RentalList
 				address={address}

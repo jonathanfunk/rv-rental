@@ -1,6 +1,6 @@
-interface IconsProps {
+type IconsProps = {
 	className?: string;
-}
+};
 
 export const Logo = ({ className }: IconsProps) => {
 	return (
