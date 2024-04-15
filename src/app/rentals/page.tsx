@@ -12,6 +12,7 @@ const Rental = () => {
 	const [startDate, setStartDate] = useState<DateType>('');
 	const [endDate, setEndDate] = useState<DateType>('');
 	const [guests, setGuests] = useState('');
+	const [types, setTypes] = useState('');
 
 	useEffect(() => {
 		setAddress(searchParams.get('address') ?? '');
@@ -21,16 +22,21 @@ const Rental = () => {
 	}, [searchParams]);
 
 	const handleSearchSubmit = (searchData: SearchData) => {
-		console.log(searchData);
 		const {
 			address,
 			guests,
+			selectedClasses,
 			date: { startDate, endDate },
 		} = searchData;
 		setAddress(address);
 		setGuests(guests);
 		setStartDate(startDate);
 		setEndDate(endDate);
+		const selectedClassesKeys = Object.keys(selectedClasses).filter(
+			(key) => selectedClasses[key]
+		);
+		const selectedClassesResults = selectedClassesKeys.join(',');
+		setTypes(selectedClassesResults);
 		console.log(address);
 	};
 
@@ -51,6 +57,7 @@ const Rental = () => {
 				startDate={startDate}
 				endDate={endDate}
 				guests={guests}
+				types={types}
 			/>
 		</>
 	);

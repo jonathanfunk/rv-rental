@@ -2,7 +2,7 @@ import { Fragment, useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '@/context/GlobalState';
 import { Map, Person } from '@/components/Icons';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
-import Autocomplete from 'react-google-autocomplete';
+import Autocomplete, { usePlacesWidget } from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
 import RangeSlider from 'react-range-slider-input';
 import { PrevSelectedClasses, PriceRange } from '@/lib/types';
@@ -84,7 +84,7 @@ const SearchForm = ({
 							className='w-full'
 							apiKey={key}
 							defaultValue={defaultAddress}
-							onPlaceSelected={(place) => setAddress(place)}
+							onPlaceSelected={(place) => setAddress(place.formatted_address)}
 						/>
 						<div className='absolute right-0 top-0 h-full px-3 text-gray-400 flex items-center pr'>
 							<Map className='h-5 w-5' />

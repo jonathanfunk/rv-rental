@@ -2,12 +2,7 @@ export type AddressObject = {
 	formatted_address: string;
 };
 
-export type Address =
-	| string
-	| null
-	| {
-			formatted_address: string;
-	  };
+export type Address = string | null;
 
 export type DateType = string | null | Date;
 
@@ -51,6 +46,7 @@ export type RentalListProps = {
 	startDate: DateType;
 	endDate: DateType;
 	guests: string;
+	types: string;
 };
 
 export type SearchData = {
