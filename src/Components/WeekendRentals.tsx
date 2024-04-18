@@ -6,7 +6,7 @@ import 'flickity/css/flickity.css';
 import RentalCard from './RentalCard';
 import { GlobalContext } from '@/context/GlobalState';
 import { getNextFriday, getNextSunday } from '@/lib/utils';
-import { Rental } from '@/lib/types';
+import { RentalData, DateType } from '@/lib/types';
 
 const flickityOptions = {
 	freeScroll: true,
@@ -16,7 +16,9 @@ const flickityOptions = {
 };
 
 const WeekendRentals = () => {
-	const [rentals, setRentals] = useState<Rental[]>([]);
+	const [rentals, setRentals] = useState<RentalData[]>([]);
+	const [startDate, setStartDate] = useState('');
+	const [endDate, setEndDate] = useState('');
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state } = useContext(GlobalContext);
 	const { currency } = state;
@@ -24,13 +26,16 @@ const WeekendRentals = () => {
 	useEffect(() => {
 		const nextFriday = getNextFriday();
 		const nextSunday = getNextSunday();
+		setStartDate(nextFriday);
+		setEndDate(nextSunday);
+
 		const params = {
 			'page[limit]': 6,
 			recommended: true,
 			instant_book: true,
 			'filter[keywords]': 'Top rated',
-			'date[from]': nextFriday,
-			'date[to]': nextSunday,
+			'date[from]': startDate,
+			'date[to]': endDate,
 			currency,
 		};
 		const fetchData = async () => {
@@ -44,7 +49,7 @@ const WeekendRentals = () => {
 			}
 		};
 		fetchData();
-	}, [BASE_URL, currency]);
+	}, [BASE_URL, currency, startDate, endDate]);
 
 	return (
 		<section className='section lg:flex lg:items-center'>
@@ -61,6 +66,7 @@ const WeekendRentals = () => {
 					{rentals.map((rental, i) => (
 						<RentalCard
 							key={i}
+							id={rental.id}
 							image={rental.attributes.primary_image_url}
 							title={rental.attributes.vehicle_title}
 							type={rental.attributes.display_vehicle_type}
@@ -70,6 +76,8 @@ const WeekendRentals = () => {
 							price={rental.attributes.price_per_day}
 							score={rental.attributes.score}
 							currency={rental.attributes.presentment_currency}
+							startDate={startDate}
+							endDate={endDate}
 						/>
 					))}
 				</Flickity>

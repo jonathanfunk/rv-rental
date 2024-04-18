@@ -19,6 +19,7 @@ const Rental = () => {
 		setStartDate(searchParams.get('startdate') ?? '');
 		setEndDate(searchParams.get('enddate') ?? '');
 		setGuests(searchParams.get('guests') ?? '');
+		setTypes(searchParams.get('types') ?? '');
 	}, [searchParams]);
 
 	const handleSearchSubmit = (searchData: SearchData) => {
@@ -37,7 +38,6 @@ const Rental = () => {
 		);
 		const selectedClassesResults = selectedClassesKeys.join(',');
 		setTypes(selectedClassesResults);
-		console.log(address);
 	};
 
 	return (

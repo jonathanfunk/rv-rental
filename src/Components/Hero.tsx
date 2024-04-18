@@ -9,6 +9,7 @@ import { Map, Person } from './Icons';
 import { AddressObject, DateRange } from '@/lib/types';
 
 const Hero = () => {
+	const key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 	const router = useRouter();
 	const [address, setAddress] = useState<AddressObject | null>(null);
 	const [guests, setGuests] = useState('');
@@ -35,17 +36,14 @@ const Hero = () => {
 
 		router.push(`/rentals/?${addressParam}${dateRangeParam}${guestsParam}`);
 	};
-
-	const key = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-
 	return (
 		<section className='bg-emerald-900 bg-opacity-30 h-screen relative flex items-end justify-center pb-8 md:pb-28'>
 			<Image
-				className='absolute top-0 left-0 w-full h-full object-cover z-[-1]'
 				src='/images/rv-rental-hero-bg.webp'
 				alt='RV on the beach'
-				width={1920}
-				height={1080}
+				fill
+				sizes='100vw'
+				className='absolute top-0 left-0 h-full w-full object-cover z-[-1]'
 				priority
 			/>
 			<div className='px-8 max-w-5xl'>

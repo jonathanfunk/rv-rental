@@ -11,23 +11,8 @@ const Header = () => {
 				>
 					<Logo className='fill-current h-11 w-11 md:h-20 md:w-20' />
 				</Link>
-				<nav className='hidden justify-between items-center gap-8 md:flex'>
-					<Link
-						href='/'
-						className='font-semibold text-lg lg:text-xl transition-colors hover:text-emerald-700'
-					>
-						Faves
-					</Link>
-					<Link
-						href='/'
-						className='font-semibold text-lg lg:text-xl transition-colors hover:text-emerald-700'
-					>
-						Currency
-					</Link>
-					<Link
-						href='/'
-						className='bg-emerald-900 rounded-full py-7 px-10 text-white font-semibold text-lg lg:text-xl transition-colors hover:bg-emerald-700'
-					>
+				<nav className='flex justify-between items-center gap-8'>
+					<Link href='/rentals' className='btn'>
 						Check Availabililty
 					</Link>
 				</nav>

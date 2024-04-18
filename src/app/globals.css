@@ -18,7 +18,10 @@
 }
 
 @layer components {
+	.btn {
+		@apply bg-emerald-900 rounded-full text-white font-semibold transition-colors text-base px-4 py-3 md:text-lg lg:text-xl lg:py-7 lg:px-10 hover:bg-emerald-700;
+	}
 	.section {
-		@apply pt-20 pb-32 lg:pt-36 lg:pb-52;
+		@apply pt-12 pb-24 md:pt-20 md:pb-32 lg:pt-36 lg:pb-52;
 	}
 }

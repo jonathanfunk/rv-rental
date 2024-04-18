@@ -14,6 +14,7 @@ export type DateRange = {
 export type PriceRange = [number, number];
 
 export type RentalData = {
+	id: string | number;
 	attributes: {
 		vehicle_title: string;
 		display_vehicle_type: string;
@@ -29,8 +30,11 @@ export type RentalData = {
 	};
 };
 
-export type RentalCard = {
+export type RentalCardProps = {
+	id: string | number;
 	title: string;
+	startDate: DateType;
+	endDate: DateType;
 	type: string;
 	sleeps: number;
 	city: string;
