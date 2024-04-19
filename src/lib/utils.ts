@@ -10,12 +10,9 @@ export const getNextFriday = () => {
 };
 
 export const getNextSunday = () => {
-	const today = new Date();
-	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-	const daysUntilSunday = dayOfWeek === 0 ? 7 : 7 - dayOfWeek;
-	const nextSunday = new Date(
-		today.getTime() + daysUntilSunday * 24 * 60 * 60 * 1000
-	);
+	const nextFriday = getNextFriday(); // Get the next Friday
+	const fridayDate = new Date(nextFriday); // Convert the string to Date object
+	const nextSunday = new Date(fridayDate.getTime() + 2 * 24 * 60 * 60 * 1000); // Add two days to get to Sunday
 	return nextSunday.toISOString().split('T')[0];
 };
 

@@ -10,6 +10,8 @@ const reducer = (state: InitialState, action: Action) => {
 			return { ...state, minPrice: action.payload };
 		case 'FETCH_MAX_PRICE':
 			return { ...state, maxPrice: action.payload };
+		case 'FETCH_RESULTS':
+			return { ...state, totalResults: action.payload };
 		default:
 			return state;
 	}

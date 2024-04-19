@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import SearchForm from '@/components/SearchForm';
 import RentalList from '@/components/RentalList';
+import Pagination from '@/components/Pagination';
 import { SearchData, DateType, Address } from '@/lib/types';
 import './style.css';
 
@@ -13,6 +14,8 @@ const Rental = () => {
 	const [endDate, setEndDate] = useState<DateType>('');
 	const [guests, setGuests] = useState('');
 	const [types, setTypes] = useState('');
+	const [offset, setOffset] = useState(0);
+	const [totalResults, setTotalResults] = useState(0);
 
 	useEffect(() => {
 		setAddress(searchParams.get('address') ?? '');
@@ -40,6 +43,16 @@ const Rental = () => {
 		setTypes(selectedClassesResults);
 	};
 
+	const handleCurrentPage = (currentPage: number) => {
+		if (currentPage === 1) {
+			setOffset(0);
+			console.log(currentPage);
+		} else {
+			setOffset(currentPage);
+			console.log(currentPage);
+		}
+	};
+
 	return (
 		<>
 			<section className='section bg-gradient-to-br from-emerald-900 to-emerald-950'>
@@ -52,13 +65,19 @@ const Rental = () => {
 				defaultEndDate={searchParams.get('enddate') ?? ''}
 				defaultGuests={searchParams.get('guests') ?? ''}
 			/>
-			<RentalList
-				address={address}
-				startDate={startDate}
-				endDate={endDate}
-				guests={guests}
-				types={types}
-			/>
+			<section className='section'>
+				<div className='px-8 lg:px-16 2xl:px-36'>
+					<RentalList
+						address={address}
+						startDate={startDate}
+						endDate={endDate}
+						guests={guests}
+						types={types}
+						offset={offset}
+					/>
+					<Pagination pageLimit={12} currentPageData={handleCurrentPage} />
+				</div>
+			</section>
 		</>
 	);
 };

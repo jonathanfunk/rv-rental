@@ -64,6 +64,7 @@ const initialState: InitialState = {
 	],
 	minPrice: 0,
 	maxPrice: 100000,
+	totalResults: 0,
 };
 
 // Create context
@@ -103,6 +104,13 @@ export const GlobalProvider = ({
 		dispatch({
 			type: 'FETCH_MAX_PRICE',
 			payload: maxPrice,
+		});
+	}
+
+	function setTotalResults(totalResults: number) {
+		dispatch({
+			type: 'FETCH_RESULTS',
+			payload: totalResults,
 		});
 	}
 

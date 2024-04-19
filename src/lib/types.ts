@@ -51,6 +51,12 @@ export type RentalListProps = {
 	endDate: DateType;
 	guests: string;
 	types: string;
+	offset: number;
+};
+
+export type PaginationProps = {
+	pageLimit: number;
+	currentPageData: (data: number) => void;
 };
 
 export type SearchData = {
@@ -79,6 +85,7 @@ export type InitialState = {
 	classes: VehicleType[];
 	minPrice: number;
 	maxPrice: number;
+	totalResults: number;
 };
 
 export type VehicleType = {
@@ -99,4 +106,5 @@ export type Action =
 	| { type: 'SET_CURRENCY'; payload: string }
 	| { type: 'FETCH_CLASSES'; payload: VehicleType[] }
 	| { type: 'FETCH_MIN_PRICE'; payload: number }
-	| { type: 'FETCH_MAX_PRICE'; payload: number };
+	| { type: 'FETCH_MAX_PRICE'; payload: number }
+	| { type: 'FETCH_RESULTS'; payload: number };

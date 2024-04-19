@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import RentalCard from './RentalCard';
+import Pagination from './Pagination';
 import { GlobalContext } from '@/context/GlobalState';
 import { RentalData, RentalListProps, VehicleType } from '@/lib/types';
 
@@ -11,15 +12,15 @@ const RentalList = ({
 	endDate,
 	guests,
 	types,
+	offset,
 }: RentalListProps) => {
 	const [rentals, setRentals] = useState<RentalData[]>([]);
-	const [totalResults, setTotalResults] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [message, setMessage] = useState('');
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state, dispatch } = useContext(GlobalContext);
-	const { currency } = state;
+	const { currency, totalResults } = state;
 
 	useEffect(() => {
 		setError(false);
@@ -31,7 +32,7 @@ const RentalList = ({
 					const params = {
 						address,
 						'page[limit]': 12,
-						//'page[offset]': 3,
+						'page[offset]': offset,
 						'date[from]': startDate,
 						'date[to]': endDate,
 						sleeps: guests,
@@ -43,7 +44,7 @@ const RentalList = ({
 						params,
 					});
 					setRentals(response.data.data);
-					setTotalResults(response.data.meta.total);
+					fetchResults(response.data.meta.total);
 					fetchClasses(response.data.meta.vehicle_types);
 					fetchMinPrice(response.data.meta.price_min);
 					fetchMaxPrice(response.data.meta.price_max);
@@ -60,6 +61,8 @@ const RentalList = ({
 			dispatch({ type: 'FETCH_MIN_PRICE', payload: minPrice });
 		const fetchMaxPrice = (maxPrice: number) =>
 			dispatch({ type: 'FETCH_MAX_PRICE', payload: maxPrice });
+		const fetchResults = (totalResults: number) =>
+			dispatch({ type: 'FETCH_RESULTS', payload: totalResults });
 		fetchData();
 	}, [
 		BASE_URL,
@@ -70,34 +73,46 @@ const RentalList = ({
 		guests,
 		types,
 		dispatch,
+		offset,
 	]);
 
+	// const handleCurrentPage = (currentPage: number) => {
+	// 	if (currentPage === 1) {
+	// 		setOffset(0);
+	// 		console.log(currentPage);
+	// 	} else {
+	// 		setOffset(currentPage);
+	// 		console.log(currentPage);
+	// 	}
+	// };
+
 	return (
-		<section className='section'>
-			<div className='px-8 lg:px-16 2xl:px-36'>
-				<p className='text-xl mb-8'>
-					{totalResults
-						? `Total Results: ${totalResults}`
-						: 'No results. Try refining your filters.'}
-				</p>
-				<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-					{rentals.map((rental, i) => (
-						<RentalCard
-							key={i}
-							image={rental.attributes.primary_image_url}
-							title={rental.attributes.vehicle_title}
-							type={rental.attributes.display_vehicle_type}
-							sleeps={rental.attributes.sleeps}
-							city={rental.attributes.location.city}
-							state={rental.attributes.location.state}
-							price={rental.attributes.price_per_day}
-							score={rental.attributes.score}
-							currency={rental.attributes.presentment_currency}
-						/>
-					))}
-				</div>
+		<>
+			<p className='text-xl mb-8'>
+				{totalResults
+					? `Total Results: ${totalResults}`
+					: 'No results. Try refining your filters.'}
+			</p>
+			<div className=' mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+				{rentals.map((rental, i) => (
+					<RentalCard
+						key={i}
+						id={rental.id}
+						image={rental.attributes.primary_image_url}
+						title={rental.attributes.vehicle_title}
+						type={rental.attributes.display_vehicle_type}
+						sleeps={rental.attributes.sleeps}
+						city={rental.attributes.location.city}
+						state={rental.attributes.location.state}
+						price={rental.attributes.price_per_day}
+						score={rental.attributes.score}
+						currency={rental.attributes.presentment_currency}
+						startDate={startDate}
+						endDate={endDate}
+					/>
+				))}
 			</div>
-		</section>
+		</>
 	);
 };
 

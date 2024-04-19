@@ -37,6 +37,7 @@ const WeekendRentals = () => {
 			'date[from]': startDate,
 			'date[to]': endDate,
 			currency,
+			include_unavailable: false,
 		};
 		const fetchData = async () => {
 			try {

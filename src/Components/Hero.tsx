@@ -47,7 +47,7 @@ const Hero = () => {
 				priority
 			/>
 			<div className='px-8 max-w-5xl'>
-				<h1>Find Your Perfect RV for the Ultimate Adventure</h1>
+				<h1>Find the Perfect RV for Your Ultimate Adventure</h1>
 				<div className='p-5 rounded-[40px] md:rounded-full backdrop-blur-lg bg-white bg-opacity-80 flex justify-center items-center lg:px-10 lg:py-7'>
 					<form
 						className='md:flex justify-center gap-3 items-center w-full'
