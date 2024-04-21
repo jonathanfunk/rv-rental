@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import SearchForm from '@/components/SearchForm';
 import RentalList from '@/components/RentalList';
 import Pagination from '@/components/Pagination';
-import { SearchData, DateType, Address } from '@/lib/types';
+import { SearchData, DateType, Address, paginationData } from '@/lib/types';
 import './style.css';
 
 const Rental = () => {
@@ -14,8 +14,8 @@ const Rental = () => {
 	const [endDate, setEndDate] = useState<DateType>('');
 	const [guests, setGuests] = useState('');
 	const [types, setTypes] = useState('');
+	const [currentPage, setCurrentPage] = useState(1);
 	const [offset, setOffset] = useState(0);
-	const [totalResults, setTotalResults] = useState(0);
 
 	useEffect(() => {
 		setAddress(searchParams.get('address') ?? '');
@@ -41,16 +41,18 @@ const Rental = () => {
 		);
 		const selectedClassesResults = selectedClassesKeys.join(',');
 		setTypes(selectedClassesResults);
+		setCurrentPage(1);
 	};
 
-	const handleCurrentPage = (currentPage: number) => {
-		if (currentPage === 1) {
-			setOffset(0);
-			console.log(currentPage);
-		} else {
-			setOffset(currentPage);
-			console.log(currentPage);
-		}
+	const handlePaginationData = (data: paginationData) => {
+		setCurrentPage(data.currentPage);
+		// setOffset((data.currentPage - 1) * 12 + 1);
+		// console.log(offset, (data.currentPage - 1) * 12 + 1);
+		setOffset(() => {
+			const newOffset = (data.currentPage - 1) * 12 + 1;
+			console.log(newOffset, (data.currentPage - 1) * 12 + 1);
+			return newOffset;
+		});
 	};
 
 	return (
@@ -75,7 +77,12 @@ const Rental = () => {
 						types={types}
 						offset={offset}
 					/>
-					<Pagination pageLimit={12} currentPageData={handleCurrentPage} />
+					<Pagination
+						pageLimit={12}
+						offset={offset}
+						currentPage={currentPage}
+						onSetPagination={handlePaginationData}
+					/>
 				</div>
 			</section>
 		</>

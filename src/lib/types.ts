@@ -54,9 +54,16 @@ export type RentalListProps = {
 	offset: number;
 };
 
+export type paginationData = {
+	currentPage: number;
+	offset: number;
+};
+
 export type PaginationProps = {
 	pageLimit: number;
-	currentPageData: (data: number) => void;
+	offset: number;
+	currentPage: number;
+	onSetPagination: (data: paginationData) => void;
 };
 
 export type SearchData = {

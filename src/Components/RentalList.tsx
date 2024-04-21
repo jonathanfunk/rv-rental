@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import RentalCard from './RentalCard';
-import Pagination from './Pagination';
 import { GlobalContext } from '@/context/GlobalState';
 import { RentalData, RentalListProps, VehicleType } from '@/lib/types';
 
@@ -40,6 +39,7 @@ const RentalList = ({
 						recommended: true,
 						'filter[type]': types,
 					};
+					console.log('Params...', params);
 					const response = await axios.get(`${BASE_URL}/rentals`, {
 						params,
 					});
@@ -75,16 +75,6 @@ const RentalList = ({
 		dispatch,
 		offset,
 	]);
-
-	// const handleCurrentPage = (currentPage: number) => {
-	// 	if (currentPage === 1) {
-	// 		setOffset(0);
-	// 		console.log(currentPage);
-	// 	} else {
-	// 		setOffset(currentPage);
-	// 		console.log(currentPage);
-	// 	}
-	// };
 
 	return (
 		<>
