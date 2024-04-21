@@ -52,16 +52,16 @@ export type RentalListProps = {
 	guests: string;
 	types: string;
 	offset: number;
+	minPrice: number | null;
+	maxPrice: number | null;
 };
 
 export type paginationData = {
 	currentPage: number;
-	offset: number;
 };
 
 export type PaginationProps = {
 	pageLimit: number;
-	offset: number;
 	currentPage: number;
 	onSetPagination: (data: paginationData) => void;
 };

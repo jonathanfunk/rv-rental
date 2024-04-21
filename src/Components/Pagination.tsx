@@ -5,24 +5,16 @@ import { PaginationProps } from '@/lib/types';
 const Pagination = ({
 	pageLimit,
 	currentPage,
-	offset,
 	onSetPagination,
 }: PaginationProps) => {
 	const { state } = useContext(GlobalContext);
 	const { totalResults } = state;
-	//const [currentPage, setCurrentPage] = useState(1);
-	//const [offset, setOffset] = useState(0);
 	const totalPages = Math.ceil(totalResults / pageLimit);
-
-	// useEffect(() => {
-	// 	setOffset((currentPage - 1) * pageLimit + 1);
-	// }, [currentPage, pageLimit]);
 
 	const handleNextPage = () => {
 		if (currentPage < totalPages) {
 			onSetPagination({
 				currentPage: currentPage + 1,
-				offset: offset + pageLimit,
 			});
 		}
 	};
@@ -31,7 +23,6 @@ const Pagination = ({
 		if (currentPage > 1) {
 			onSetPagination({
 				currentPage: currentPage - 1,
-				offset: offset - pageLimit,
 			});
 		}
 	};

@@ -12,6 +12,8 @@ const RentalList = ({
 	guests,
 	types,
 	offset,
+	minPrice,
+	maxPrice,
 }: RentalListProps) => {
 	const [rentals, setRentals] = useState<RentalData[]>([]);
 	const [loading, setLoading] = useState(false);
@@ -20,6 +22,8 @@ const RentalList = ({
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state, dispatch } = useContext(GlobalContext);
 	const { currency, totalResults } = state;
+
+	console.log(rentals);
 
 	useEffect(() => {
 		setError(false);
@@ -31,13 +35,15 @@ const RentalList = ({
 					const params = {
 						address,
 						'page[limit]': 12,
-						'page[offset]': offset,
+						'page[offset]': offset === 1 ? 0 : offset,
 						'date[from]': startDate,
 						'date[to]': endDate,
 						sleeps: guests,
 						currency,
 						recommended: true,
 						'filter[type]': types,
+						'price[min]': minPrice,
+						'price[max]': maxPrice,
 					};
 					console.log('Params...', params);
 					const response = await axios.get(`${BASE_URL}/rentals`, {
@@ -74,6 +80,8 @@ const RentalList = ({
 		types,
 		dispatch,
 		offset,
+		minPrice,
+		maxPrice,
 	]);
 
 	return (

@@ -15,6 +15,8 @@ const Rental = () => {
 	const [guests, setGuests] = useState('');
 	const [types, setTypes] = useState('');
 	const [currentPage, setCurrentPage] = useState(1);
+	const [minPrice, setMinPrice] = useState<number | null>(null);
+	const [maxPrice, setMaxPrice] = useState<number | null>(null);
 	const [offset, setOffset] = useState(0);
 
 	useEffect(() => {
@@ -31,26 +33,28 @@ const Rental = () => {
 			guests,
 			selectedClasses,
 			date: { startDate, endDate },
+			range,
 		} = searchData;
+		console.log(range);
+		setCurrentPage(1);
+		setOffset(0);
 		setAddress(address);
 		setGuests(guests);
 		setStartDate(startDate);
 		setEndDate(endDate);
+		setMinPrice(range[0] * 100);
+		setMaxPrice(range[1] * 100);
 		const selectedClassesKeys = Object.keys(selectedClasses).filter(
 			(key) => selectedClasses[key]
 		);
 		const selectedClassesResults = selectedClassesKeys.join(',');
 		setTypes(selectedClassesResults);
-		setCurrentPage(1);
 	};
 
 	const handlePaginationData = (data: paginationData) => {
 		setCurrentPage(data.currentPage);
-		// setOffset((data.currentPage - 1) * 12 + 1);
-		// console.log(offset, (data.currentPage - 1) * 12 + 1);
 		setOffset(() => {
 			const newOffset = (data.currentPage - 1) * 12 + 1;
-			console.log(newOffset, (data.currentPage - 1) * 12 + 1);
 			return newOffset;
 		});
 	};
@@ -76,10 +80,11 @@ const Rental = () => {
 						guests={guests}
 						types={types}
 						offset={offset}
+						minPrice={minPrice}
+						maxPrice={maxPrice}
 					/>
 					<Pagination
 						pageLimit={12}
-						offset={offset}
 						currentPage={currentPage}
 						onSetPagination={handlePaginationData}
 					/>

@@ -51,6 +51,7 @@ const WeekendRentals = () => {
 		};
 		fetchData();
 	}, [BASE_URL, currency, startDate, endDate]);
+	console.log(rentals);
 
 	return (
 		<section className='section lg:flex lg:items-center'>

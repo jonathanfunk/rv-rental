@@ -31,16 +31,16 @@ const RentalCard = ({
 		<a
 			href={`https://checkout.wheelbasepro.com/reserve/${id}${dateRange}`}
 			target='_blank'
-			className='w-[calc(100%-12px)] md:w-[500px] max-w-full min-h-[calc(100%-12px)] rounded-[40px] border-solid border-2 border-emerald-950 shadow-solid overflow-hidden mr-8 mb-3'
+			className='group w-[calc(100%-12px)] md:w-[500px] max-w-full min-h-[calc(100%-12px)] rounded-[40px] border-solid border-2 border-emerald-950 shadow-solid overflow-hidden mr-8 mb-3'
 		>
 			<div>
-				<div className='h-[225px] md:h-[320px] bg-emerald-950 relative'>
+				<div className='h-[225px] md:h-[320px] bg-emerald-950 relative overflow-hidden'>
 					<Image
 						src={imageUrl}
 						width={500}
 						height={225}
 						alt={title}
-						className='h-full w-full object-cover'
+						className='h-full w-full object-cover group-hover:scale-110 transition-transform'
 					/>
 				</div>
 				<div className='p-6 md:p-10'>
