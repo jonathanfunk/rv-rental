@@ -1,4 +1,7 @@
+'use client';
+import { Fragment } from 'react';
 import { Logo } from '@/components/Icons';
+import CurrencyDropDown from './CurrencyDropDown';
 import Link from 'next/link';
 
 const Header = () => {
@@ -8,10 +11,12 @@ const Header = () => {
 				<Link
 					href='/'
 					className='text-emerald-900 transition-colors hover:text-emerald-700'
+					aria-label='Home page link'
 				>
 					<Logo className='fill-current h-11 w-11 md:h-20 md:w-20' />
 				</Link>
 				<nav className='flex justify-between items-center gap-8'>
+					<CurrencyDropDown />
 					<Link href='/rentals' className='btn'>
 						Check Availabililty
 					</Link>

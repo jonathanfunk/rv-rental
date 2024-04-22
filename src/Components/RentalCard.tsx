@@ -55,7 +55,7 @@ const RentalCard = ({
 					<div className='flex justify-between text-gray-900 font-semibold text-xl md:text-3xl'>
 						<p>
 							{getCurrencySymbol(currency.toUpperCase())}
-							{priceInDollars(price)} / Night
+							{priceInDollars(price)} {currency}/Night
 						</p>
 						{score > 0 ? (
 							<p className='flex'>

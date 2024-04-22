@@ -1,10 +1,7 @@
 import { Fragment } from 'react';
 
 import { Popover, Transition, Dialog } from '@headlessui/react';
-import {
-	ChevronDownIcon,
-	AdjustmentsHorizontalIcon,
-} from '@heroicons/react/20/solid';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 type Props = {
 	children: React.ReactNode;

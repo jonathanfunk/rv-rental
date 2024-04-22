@@ -25,13 +25,13 @@ export const getCurrencySymbol = (currencyCode: string) => {
 		case 'EUR':
 			return '€';
 		case 'CAD':
-			return 'C$';
+			return '$';
 		case 'AUD':
-			return 'A$';
+			return '$';
 		case 'NZD':
-			return 'NZ$';
+			return '$';
 		default:
-			return '$'; // Default to '$' for unknown currency codes
+			return '$';
 	}
 };
 
