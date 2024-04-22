@@ -71,6 +71,7 @@ const Rental = () => {
 				defaultEndDate={searchParams.get('enddate') ?? ''}
 				defaultGuests={searchParams.get('guests') ?? ''}
 			/>
+
 			<section className='section'>
 				<div className='px-8 lg:px-16 2xl:px-36'>
 					<RentalList

@@ -56,6 +56,11 @@ export type RentalListProps = {
 	maxPrice: number | null;
 };
 
+export type AutoCompleteProps = {
+	defaultAddress: string;
+	handlePlaceSelected: (place: string) => void;
+};
+
 export type paginationData = {
 	currentPage: number;
 };
