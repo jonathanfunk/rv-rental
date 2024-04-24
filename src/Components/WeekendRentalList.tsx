@@ -1,20 +1,26 @@
-import Flickity from 'react-flickity-component';
-import 'flickity/css/flickity.css';
+// import Flickity from 'react-flickity-component';
+// import 'flickity/css/flickity.css';
+import useEmblaCarousel from 'embla-carousel-react';
 import RentalCard from './RentalCard';
 import { WeekendRentalListProps } from '@/lib/types';
 import { getNextFriday, getNextSunday } from '@/lib/utils';
 
-const flickityOptions = {
-	freeScroll: true,
-	contain: true,
-	prevNextButtons: false,
-	pageDots: false,
-};
+// const flickityOptions = {
+// 	freeScroll: true,
+// 	contain: true,
+// 	prevNextButtons: false,
+// 	pageDots: false,
+// };
 
 const WeekendRentalList = ({ rentals }: WeekendRentalListProps) => {
+	const [emblaRef] = useEmblaCarousel();
 	return (
-		<div className=' px-8 lg:px-0 lg:w-2/3'>
-			<Flickity options={flickityOptions}>
+		<div
+			className=' px-8 lg:px-0 lg:w-2/3 overflow-hidden min-w-0'
+			ref={emblaRef}
+		>
+			<div className='flex'>
+				{/* <Flickity options={flickityOptions}> */}
 				{rentals.map((rental, i) => (
 					<RentalCard
 						key={i}
@@ -30,10 +36,11 @@ const WeekendRentalList = ({ rentals }: WeekendRentalListProps) => {
 						currency={rental.attributes.presentment_currency}
 						startDate={getNextFriday()}
 						endDate={getNextSunday()}
-						classes={'md:w-[500px]'}
+						classes={'md:w-[500px] min-w-0 flex-shrink-0 flex-grow-0 w-full'}
 					/>
 				))}
-			</Flickity>
+			</div>
+			{/* </Flickity> */}
 		</div>
 	);
 };

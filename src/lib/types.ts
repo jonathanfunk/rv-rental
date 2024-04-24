@@ -30,6 +30,10 @@ export type RentalData = {
 	};
 };
 
+export type WeekendRentalListProps = {
+	rentals: RentalData[];
+};
+
 export type RentalCardProps = {
 	id: string | number;
 	title: string;
