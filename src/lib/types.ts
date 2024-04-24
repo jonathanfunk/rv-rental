@@ -43,6 +43,7 @@ export type RentalCardProps = {
 	score: number;
 	image: string;
 	currency: string;
+	classes?: string;
 };
 
 export type RentalListProps = {

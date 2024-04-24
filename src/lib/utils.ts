@@ -2,17 +2,36 @@ export const getNextFriday = () => {
 	const today = new Date();
 	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
 	const daysUntilFriday =
-		dayOfWeek === 5 ? 7 : dayOfWeek < 5 ? 5 - dayOfWeek : 5 + (7 - dayOfWeek);
+		dayOfWeek === 5 ? 7 : dayOfWeek < 5 ? 5 - dayOfWeek : 6 - dayOfWeek + 5;
+
+	// Adjust for timezone offset (PST is UTC-8)
+	const timezoneOffsetMs = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
 	const nextFriday = new Date(
-		today.getTime() + daysUntilFriday * 24 * 60 * 60 * 1000
+		today.getTime() + daysUntilFriday * 24 * 60 * 60 * 1000 - timezoneOffsetMs
 	);
+
 	return nextFriday.toISOString().split('T')[0];
 };
 
 export const getNextSunday = () => {
-	const nextFriday = getNextFriday(); // Get the next Friday
-	const fridayDate = new Date(nextFriday); // Convert the string to Date object
-	const nextSunday = new Date(fridayDate.getTime() + 2 * 24 * 60 * 60 * 1000); // Add two days to get to Sunday
+	const today = new Date(); // Get the current date
+	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+	let daysToAdd;
+	if (dayOfWeek === 0) {
+		// If today is Sunday, add 7 days to get to the next Sunday
+		daysToAdd = 7;
+	} else {
+		// Otherwise, add days until the next Sunday
+		daysToAdd = 7 - dayOfWeek;
+	}
+
+	// Adjust for timezone offset (PST is UTC-8)
+	const timezoneOffsetMs = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
+	const nextSunday = new Date(
+		today.getTime() + daysToAdd * 24 * 60 * 60 * 1000 - timezoneOffsetMs
+	);
+
 	return nextSunday.toISOString().split('T')[0];
 };
 

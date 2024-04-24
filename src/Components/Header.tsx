@@ -15,7 +15,7 @@ const Header = () => {
 				>
 					<Logo className='fill-current h-11 w-11 md:h-20 md:w-20' />
 				</Link>
-				<nav className='flex justify-between items-center gap-8'>
+				<nav className='flex justify-between items-center gap-3 md:gap-8'>
 					<CurrencyDropDown />
 					<Link href='/rentals' className='btn'>
 						Check Availabililty

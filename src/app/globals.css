@@ -19,7 +19,7 @@
 
 @layer components {
 	.btn {
-		@apply bg-emerald-900 rounded-full text-white font-semibold transition-colors text-base px-4 py-3 md:text-lg lg:text-xl lg:py-7 lg:px-10 hover:bg-emerald-700;
+		@apply bg-emerald-900 rounded-full text-white text-center font-semibold transition-colors text-base px-4 py-3 md:text-lg lg:text-xl lg:py-7 lg:px-10 hover:bg-emerald-700;
 	}
 
 	.btn-small {

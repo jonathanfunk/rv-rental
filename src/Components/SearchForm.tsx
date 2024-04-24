@@ -1,4 +1,10 @@
-import { Fragment, useState, useContext, useEffect } from 'react';
+import {
+	Fragment,
+	useState,
+	useContext,
+	useEffect,
+	SetStateAction,
+} from 'react';
 import { GlobalContext } from '@/context/GlobalState';
 import { Map, Person } from '@/components/Icons';
 import PopOverGroup from './PopOverGroup';
@@ -7,7 +13,7 @@ import Autocomplete from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
 import RangeSlider from 'react-range-slider-input';
 import { PrevSelectedClasses, PriceRange } from '@/lib/types';
-import { Popover, Transition, Dialog } from '@headlessui/react';
+import { Dialog } from '@headlessui/react';
 import {
 	ChevronDownIcon,
 	AdjustmentsHorizontalIcon,
@@ -48,7 +54,7 @@ const SearchForm = ({
 		const minPriceDollars = priceInDollars(minPrice);
 		const maxPriceDollars = priceInDollars(maxPrice);
 		setRange([minPriceDollars, maxPriceDollars]);
-	}, [maxPrice, minPrice]);
+	}, [maxPrice, minPrice, address]);
 
 	const handleDateChange = (newDate: any) => {
 		setDate(newDate);
@@ -61,7 +67,9 @@ const SearchForm = ({
 		}));
 	};
 
-	const handleGuestsChange = (e: any) => {
+	const handleGuestsChange = (e: {
+		target: { value: SetStateAction<string> };
+	}) => {
 		setGuests(e.target.value);
 	};
 
@@ -78,6 +86,19 @@ const SearchForm = ({
 		setIsOpen(false);
 	};
 
+	const handleClearFilters = (e: { preventDefault: () => void }) => {
+		setAddress('');
+		const minPriceDollars = priceInDollars(minPrice);
+		const maxPriceDollars = priceInDollars(maxPrice);
+		setRange([minPriceDollars, maxPriceDollars]);
+		setGuests('');
+		console.log(date);
+		setDate({
+			startDate: '',
+			endDate: '',
+		});
+	};
+
 	return (
 		<div className='bg-gray-50 justify-center items-center w-full lg:p-5 lg:z-0 lg:static lg:flex lg:px-10 lg:py-7'>
 			<form
@@ -90,6 +111,10 @@ const SearchForm = ({
 							className='w-full'
 							apiKey={key}
 							defaultValue={defaultAddress}
+							value={address}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+								setAddress(e.target.value)
+							}
 							onPlaceSelected={(place) => setAddress(place.formatted_address)}
 						/>
 						<div className='absolute right-0 top-0 h-full px-3 text-gray-400 flex items-center pr'>
@@ -171,7 +196,8 @@ const SearchForm = ({
 						</div>
 					</PopOverGroup>
 				</div>
-				<div className='lg:w-1/3 lg:flex lg:justify-end'>
+				<div className='lg:w-1/3 lg:flex lg:justify-end gap-5'>
+					<button onClick={handleClearFilters}>Clear Filters</button>
 					<button className='btn btn-small' type='submit'>
 						Apply Filters
 					</button>
@@ -290,6 +316,7 @@ const SearchForm = ({
 											{range[0]} - {currencySymbol}
 											{range[1]}
 										</p>
+										<button>Clear Filters</button>
 										<button
 											className='w-full h-14 bg-emerald-900 rounded-full flex justify-center items-center text-white'
 											type='submit'
