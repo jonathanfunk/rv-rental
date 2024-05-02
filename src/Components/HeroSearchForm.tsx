@@ -22,9 +22,8 @@ const HeroSearchForm = () => {
 		setDate(newDate);
 	};
 
-	const handleSubmit = (e: { preventDefault: () => void }) => {
+	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log(address);
 		let dateRangeParam = '';
 		let addressParam = address ? `address=${address.formatted_address}` : '';
 		let guestsParam = guests ? `&guests=${guests}` : '';
@@ -34,6 +33,7 @@ const HeroSearchForm = () => {
 
 		router.push(`/rentals/?${addressParam}${dateRangeParam}${guestsParam}`);
 	};
+
 	return (
 		<div className='p-5 rounded-[40px] md:rounded-full backdrop-blur-lg bg-white bg-opacity-80 flex justify-center items-center lg:px-10 lg:py-7'>
 			<form
@@ -42,7 +42,9 @@ const HeroSearchForm = () => {
 			>
 				<div className='flex-grow md:flex flex-1'>
 					<div className='mb-4 md:mb-0 md:w-1/3 md:mr-3 relative'>
+						<label htmlFor='autocomplete'>Location</label>
 						<Autocomplete
+							id='autocomplete'
 							className='w-full'
 							apiKey={key}
 							onPlaceSelected={(place) => setAddress(place)}
@@ -51,31 +53,34 @@ const HeroSearchForm = () => {
 							<Map className='h-5 w-5' />
 						</div>
 					</div>
-					<Datepicker
-						value={date}
-						placeholder={'Dates'}
-						containerClassName='w-full mb-4 md:mb-0 md:w-1/3 md:mr-4 relative'
-						inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
-						onChange={handleDateChange}
-						primaryColor={'emerald'}
-						useRange={false}
-						disabledDates={[
-							{
-								startDate: new Date(0).toISOString().split('T')[0],
-								endDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
-									.toISOString()
-									.split('T')[0],
-							},
-						]}
-					/>
+					<div className='mb-4 md:mb-0 md:w-1/3 md:mr-4 relative'>
+						<label htmlFor='datepicker'>Dates</label>
+						<Datepicker
+							value={date}
+							placeholder={'Dates'}
+							containerClassName='w-full'
+							inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
+							onChange={handleDateChange}
+							primaryColor={'emerald'}
+							useRange={false}
+							disabledDates={[
+								{
+									startDate: new Date(0).toISOString().split('T')[0],
+									endDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
+										.toISOString()
+										.split('T')[0],
+								},
+							]}
+						/>
+					</div>
 					<div className='mb-4 md:mb-0 md:w-1/3 md:mr-3 relative'>
+						<label htmlFor='guests'>Number of Guests</label>
 						<input
+							id='guests'
 							className='w-full'
 							type='number'
 							name='guests'
 							placeholder='Guests'
-							id='guests'
-							value={guests}
 							onChange={(e) => setGuests(e.target.value)}
 						/>
 						<div className='absolute right-0 top-0 h-full px-3 text-gray-400 flex items-center pr'>

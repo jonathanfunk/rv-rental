@@ -3,14 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+	html {
+		@apply scroll-smooth;
+	}
 	h1 {
 		@apply text-white font-bold text-5xl text-center mb-9 md:text-6xl md:mb-16;
 	}
 	h2 {
 		@apply text-center text-5xl font-light text-gray-900 mb-12 md:text-8xl md:mb-20;
 	}
+	label {
+		@apply text-sm pl-6 absolute top-2;
+	}
 	input {
-		@apply text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400;
+		@apply text-base pt-5 outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400;
 	}
 	input[type='range'] {
 		@apply border-none;
@@ -28,4 +34,11 @@
 	.section {
 		@apply pt-12 pb-24 md:pt-20 md:pb-32 lg:pt-36 lg:pb-52;
 	}
+}
+
+.custom-range-styles .range-slider .range-slider__range {
+	@apply bg-emerald-800;
+}
+.custom-range-styles .range-slider__thumb {
+	@apply bg-emerald-900;
 }

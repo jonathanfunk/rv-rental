@@ -1,23 +1,13 @@
-import {
-	Fragment,
-	useState,
-	useContext,
-	useEffect,
-	SetStateAction,
-} from 'react';
+import { useState, useContext, useEffect, SetStateAction } from 'react';
 import { GlobalContext } from '@/context/GlobalState';
 import { Map, Person } from '@/components/Icons';
 import PopOverGroup from './PopOverGroup';
-import { FaMagnifyingGlass } from 'react-icons/fa6';
 import Autocomplete from 'react-google-autocomplete';
 import Datepicker from 'react-tailwindcss-datepicker';
 import RangeSlider from 'react-range-slider-input';
-import { PrevSelectedClasses, PriceRange } from '@/lib/types';
+import { PrevSelectedClasses, PriceRange, DateRange } from '@/lib/types';
 import { Dialog } from '@headlessui/react';
-import {
-	ChevronDownIcon,
-	AdjustmentsHorizontalIcon,
-} from '@heroicons/react/20/solid';
+import { AdjustmentsHorizontalIcon } from '@heroicons/react/20/solid';
 import { getCurrencySymbol, priceInDollars } from '@/lib/utils';
 import { SearchProps } from '@/lib/types';
 import 'react-range-slider-input/dist/style.css';
@@ -33,10 +23,11 @@ const SearchForm = ({
 	const { currency, classes, minPrice, maxPrice } = state;
 	const currencySymbol = getCurrencySymbol(currency);
 	const [address, setAddress] = useState(defaultAddress);
-	const [date, setDate] = useState({
+	const [date, setDate] = useState<DateRange>({
 		startDate: defaultStartDate,
 		endDate: defaultEndDate,
 	});
+
 	const [guests, setGuests] = useState(defaultGuests);
 	const [selectedClasses, setSelectedClasses] = useState<PrevSelectedClasses>(
 		{}
@@ -92,11 +83,11 @@ const SearchForm = ({
 		const maxPriceDollars = priceInDollars(maxPrice);
 		setRange([minPriceDollars, maxPriceDollars]);
 		setGuests('');
-		console.log(date);
 		setDate({
-			startDate: '',
-			endDate: '',
+			startDate: null,
+			endDate: null,
 		});
+		setSelectedClasses({});
 	};
 
 	return (
@@ -107,10 +98,11 @@ const SearchForm = ({
 			>
 				<div className='items-center w-2/3 flex'>
 					<div className='mb-4 md:mb-0 md:mr-4 relative'>
+						<label htmlFor='autocomplete'>Location</label>
 						<Autocomplete
+							id='autocomplete'
 							className='w-full'
 							apiKey={key}
-							defaultValue={defaultAddress}
 							value={address}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								setAddress(e.target.value)
@@ -121,24 +113,28 @@ const SearchForm = ({
 							<Map className='h-5 w-5' />
 						</div>
 					</div>
-					<Datepicker
-						value={date}
-						placeholder={'Dates'}
-						containerClassName='mb-4 md:mb-0 md:mr-4 relative'
-						inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
-						onChange={handleDateChange}
-						primaryColor={'emerald'}
-						useRange={false}
-						disabledDates={[
-							{
-								startDate: new Date(0).toISOString().split('T')[0],
-								endDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
-									.toISOString()
-									.split('T')[0],
-							},
-						]}
-					/>
 					<div className='mb-4 md:mb-0 md:mr-4 relative'>
+						<label htmlFor='datepicker'>Dates</label>
+						<Datepicker
+							value={date}
+							placeholder={'Dates'}
+							containerClassName='w-full'
+							inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
+							onChange={handleDateChange}
+							primaryColor={'emerald'}
+							useRange={false}
+							disabledDates={[
+								{
+									startDate: new Date(0).toISOString().split('T')[0],
+									endDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
+										.toISOString()
+										.split('T')[0],
+								},
+							]}
+						/>
+					</div>
+					<div className='mb-4 md:mb-0 md:mr-4 relative'>
+						<label htmlFor='guests'>Number of Guests</label>
 						<input
 							className='w-full'
 							type='number'
@@ -169,7 +165,7 @@ const SearchForm = ({
 									<div className='text-sm leading-6'>
 										<label
 											htmlFor={item.type}
-											className='text-gray-900 text-lg'
+											className='text-gray-900 text-lg static'
 										>
 											{item.label}
 										</label>
@@ -182,7 +178,6 @@ const SearchForm = ({
 						<div className='p-8'>
 							<RangeSlider
 								className='custom-range-styles'
-								defaultValue={[minPriceDollars, maxPriceDollars]}
 								value={range}
 								onInput={setRange}
 								min={minPriceDollars}
@@ -236,10 +231,11 @@ const SearchForm = ({
 								<form onSubmit={handleSubmit}>
 									<div className='flex flex-col gap-6'>
 										<div className='relative'>
+											<label htmlFor='autocomplete'>Location</label>
 											<Autocomplete
+												id='autocomplete'
 												className='w-full'
 												apiKey={key}
-												defaultValue={defaultAddress}
 												onPlaceSelected={(place) =>
 													setAddress(place.formatted_address)
 												}
@@ -248,24 +244,28 @@ const SearchForm = ({
 												<Map className='h-5 w-5' />
 											</div>
 										</div>
-										<Datepicker
-											value={date}
-											placeholder={'Dates'}
-											containerClassName='relative'
-											inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
-											onChange={handleDateChange}
-											primaryColor={'emerald'}
-											useRange={false}
-											disabledDates={[
-												{
-													startDate: new Date(0).toISOString().split('T')[0],
-													endDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
-														.toISOString()
-														.split('T')[0],
-												},
-											]}
-										/>
 										<div className='relative'>
+											<label htmlFor='datepicker'>Dates</label>
+											<Datepicker
+												value={date}
+												placeholder={'Dates'}
+												containerClassName='w-full'
+												inputClassName='w-full text-base outline-none border-solid border-[1px] border-gray-200 pl-6 pr-10 h-14 rounded-full bg-white focus:border-gray-400'
+												onChange={handleDateChange}
+												primaryColor={'emerald'}
+												useRange={false}
+												disabledDates={[
+													{
+														startDate: new Date(0).toISOString().split('T')[0],
+														endDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
+															.toISOString()
+															.split('T')[0],
+													},
+												]}
+											/>
+										</div>
+										<div className='relative'>
+											<label htmlFor='guests'>Number of Guests</label>
 											<input
 												className='w-full'
 												type='number'
@@ -279,43 +279,48 @@ const SearchForm = ({
 												<Person className='h-5 w-5' />
 											</div>
 										</div>
-										<div className='grid grid-cols-2 gap-3'>
-											{classes.map((item, i) => (
-												<div className='relative flex gap-x-3 py-1' key={i}>
-													<div className='flex h-6 items-center'>
-														<input
-															id={item.type}
-															name={item.type}
-															type='checkbox'
-															className='form-checkbox h-4 w-4 rounded-full border-gray-300 checked:bg-emerald-900 focus:ring-emerald-600 focus:checked:bg-emerald-900 checked:hover:bg-emerald-800'
-															checked={selectedClasses[item.type] || false}
-															onChange={() => handleClassesChange(item.type)}
-														/>
+										<div>
+											<p className='mb-5 text-xl'>Types</p>
+											<div className='grid grid-cols-2 gap-3'>
+												{classes.map((item, i) => (
+													<div className='relative flex gap-x-3 py-1' key={i}>
+														<div className='flex h-6 items-center'>
+															<input
+																id={item.type}
+																name={item.type}
+																type='checkbox'
+																className='form-checkbox h-4 w-4 rounded-full border-gray-300 checked:bg-emerald-900 focus:ring-emerald-600 focus:checked:bg-emerald-900 checked:hover:bg-emerald-800'
+																checked={selectedClasses[item.type] || false}
+																onChange={() => handleClassesChange(item.type)}
+															/>
+														</div>
+														<div className='text-sm leading-6'>
+															<label
+																htmlFor={item.type}
+																className='text-gray-900 text-base static pl-0'
+															>
+																{item.label}
+															</label>
+														</div>
 													</div>
-													<div className='text-sm leading-6'>
-														<label
-															htmlFor={item.type}
-															className='text-gray-900 text-lg'
-														>
-															{item.label}
-														</label>
-													</div>
-												</div>
-											))}
+												))}
+											</div>
 										</div>
-										<RangeSlider
-											className='custom-range-styles'
-											defaultValue={[minPriceDollars, maxPriceDollars]}
-											value={range}
-											onInput={setRange}
-											min={minPriceDollars}
-											max={maxPriceDollars}
-										/>
-										<p className='mt-4'>
-											{currencySymbol}
-											{range[0]} - {currencySymbol}
-											{range[1]}
-										</p>
+										<div>
+											<p className='mb-5 text-xl'>Price Range</p>
+											<RangeSlider
+												className='custom-range-styles'
+												value={range}
+												onInput={setRange}
+												min={minPriceDollars}
+												max={maxPriceDollars}
+											/>
+											<p className='mt-4'>
+												{currencySymbol}
+												{range[0]} - {currencySymbol}
+												{range[1]}
+											</p>
+										</div>
 										<button>Clear Filters</button>
 										<button
 											className='w-full h-14 bg-emerald-900 rounded-full flex justify-center items-center text-white'

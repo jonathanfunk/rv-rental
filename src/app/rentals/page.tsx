@@ -1,96 +1,43 @@
-'use client';
-import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import SearchForm from '@/components/SearchForm';
-import RentalList from '@/components/RentalList';
-import Pagination from '@/components/Pagination';
-import { SearchData, DateType, Address, paginationData } from '@/lib/types';
-import './style.css';
+import RentalListContent from '@/components/RentalListContent';
+import Image from 'next/image';
+
+export const metadata = {
+	title: 'RV Rentals | Search',
+	description:
+		'I create minimalistic websites that prioritize ease of use and performance. Send an email to jon.m.funk@gmail.com to get started!',
+	openGraph: {
+		title: 'RV Rentals | Search',
+		description:
+			'I create minimalistic websites that prioritize ease of use and performance. Send an email to jon.m.funk@gmail.com to get started!',
+		url: 'https://www.jonathanfunk.ca',
+		siteName: 'RV Rentals | Search',
+		images: [
+			{
+				url: 'https://www.jonathanfunk.ca/images/mobile-mocks.webp',
+				width: 600,
+				height: 300,
+			},
+		],
+		locale: 'en_CA',
+		type: 'website',
+	},
+};
 
 const Rental = () => {
-	const searchParams = useSearchParams();
-	const [address, setAddress] = useState<Address | null>(null);
-	const [startDate, setStartDate] = useState<DateType>('');
-	const [endDate, setEndDate] = useState<DateType>('');
-	const [guests, setGuests] = useState('');
-	const [types, setTypes] = useState('');
-	const [currentPage, setCurrentPage] = useState(1);
-	const [minPrice, setMinPrice] = useState<number | null>(null);
-	const [maxPrice, setMaxPrice] = useState<number | null>(null);
-	const [offset, setOffset] = useState(0);
-
-	useEffect(() => {
-		setAddress(searchParams.get('address') ?? '');
-		setStartDate(searchParams.get('startdate') ?? '');
-		setEndDate(searchParams.get('enddate') ?? '');
-		setGuests(searchParams.get('guests') ?? '');
-		setTypes(searchParams.get('types') ?? '');
-	}, [searchParams]);
-
-	const handleSearchSubmit = (searchData: SearchData) => {
-		const {
-			address,
-			guests,
-			selectedClasses,
-			date: { startDate, endDate },
-			range,
-		} = searchData;
-		console.log(range);
-		setCurrentPage(1);
-		setOffset(0);
-		setAddress(address);
-		setGuests(guests);
-		setStartDate(startDate);
-		setEndDate(endDate);
-		setMinPrice(range[0] * 100);
-		setMaxPrice(range[1] * 100);
-		const selectedClassesKeys = Object.keys(selectedClasses).filter(
-			(key) => selectedClasses[key]
-		);
-		const selectedClassesResults = selectedClassesKeys.join(',');
-		setTypes(selectedClassesResults);
-	};
-
-	const handlePaginationData = (data: paginationData) => {
-		setCurrentPage(data.currentPage);
-		setOffset(() => {
-			const newOffset = (data.currentPage - 1) * 12 + 1;
-			return newOffset;
-		});
-	};
-
 	return (
 		<>
-			<section className='section bg-gradient-to-br from-emerald-900 to-emerald-950'>
+			<section className='section bg-emerald-900 bg-opacity-30 relative'>
+				<Image
+					src='/images/rv-rental-search-hero-bg.webp'
+					alt='RV on the road'
+					fill
+					sizes='100vw'
+					className='absolute top-0 left-0 h-full w-full object-cover z-[-1]'
+					priority
+				/>
 				<h1 className='mb-0 mt-28'>Discover Your Dream RV Rental</h1>
 			</section>
-			<SearchForm
-				onSubmit={handleSearchSubmit}
-				defaultAddress={searchParams.get('address') ?? ''}
-				defaultStartDate={searchParams.get('startdate') ?? ''}
-				defaultEndDate={searchParams.get('enddate') ?? ''}
-				defaultGuests={searchParams.get('guests') ?? ''}
-			/>
-
-			<section className='section'>
-				<div className='px-8 lg:px-16 2xl:px-36'>
-					<RentalList
-						address={address}
-						startDate={startDate}
-						endDate={endDate}
-						guests={guests}
-						types={types}
-						offset={offset}
-						minPrice={minPrice}
-						maxPrice={maxPrice}
-					/>
-					<Pagination
-						pageLimit={12}
-						currentPage={currentPage}
-						onSetPagination={handlePaginationData}
-					/>
-				</div>
-			</section>
+			<RentalListContent />
 		</>
 	);
 };
