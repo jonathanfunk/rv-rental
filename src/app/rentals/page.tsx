@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import RentalListContent from '@/components/RentalListContent';
 import Image from 'next/image';
+import { Suspense } from 'react';
 import rvRentalSearchHeroBg from '../../../public/images/rv-rental-search-hero-bg.webp';
 
 export const metadata: Metadata = {
@@ -38,7 +39,9 @@ const Rental = () => {
 				/>
 				<h1 className='mb-0 mt-28'>Discover Your Dream RV Rental</h1>
 			</section>
-			<RentalListContent />
+			<Suspense>
+				<RentalListContent />
+			</Suspense>
 		</>
 	);
 };
