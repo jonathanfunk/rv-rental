@@ -22,7 +22,7 @@ const HowItWorks = () => {
 		<section className='section'>
 			<div className='px-8 lg:px-16 2xl:px-36'>
 				<h2>How it Works</h2>
-				<div className='grid lg:grid-cols-3 gap-8'>
+				<div className='grid lg:grid-cols-3 gap-8 pr-3'>
 					{steps.map((step, i) => (
 						<div
 							className='p-12 md:px-20 md:py-11 rounded-[40px] border-2 border-emerald-950 shadow-solid flex flex-col gap-7'

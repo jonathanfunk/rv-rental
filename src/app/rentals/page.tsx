@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: 'Search | RV Rentals',
 		description: 'Discover Your Dream RV Rental!',
-		url: 'https://www.jonathanfunk.ca',
+		url: 'https://rvrental.jonathanfunk.ca',
 		siteName: 'Search | RV Rentals',
 		images: [
 			{
-				url: 'https://www.jonathanfunk.ca/images/mobile-mocks.webp',
+				url: 'https://rvrental.jonathanfunk.ca/images/rv-rental-search-hero-bg.webp',
 				width: 600,
 				height: 300,
 			},

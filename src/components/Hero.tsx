@@ -11,7 +11,7 @@ const Hero = () => {
 				alt='RV on the beach'
 				fill
 				sizes='100vw'
-				className='absolute top-0 left-0 h-full w-full object-cover z-[-1]'
+				className='absolute top-0 left-0 h-full w-full object-cover object-right z-[-1]'
 				priority
 				placeholder='blur'
 			/>
