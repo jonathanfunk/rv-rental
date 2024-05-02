@@ -2,15 +2,16 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import WeekendRentalList from './WeekendRentalList';
+import LoadSpinner from './LoadSpinner';
 import { GlobalContext } from '@/context/GlobalState';
-import { getNextFriday, getNextSunday } from '@/lib/utils';
+import Link from 'next/link';
 import { RentalData } from '@/lib/types';
+import { getNextFriday, getNextSunday } from '@/lib/utils';
 
 const WeekendRentals = () => {
 	const [rentals, setRentals] = useState<RentalData[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
-	const [message, setMessage] = useState('');
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state } = useContext(GlobalContext);
 	const { currency } = state;
@@ -18,7 +19,6 @@ const WeekendRentals = () => {
 	useEffect(() => {
 		setError(false);
 		setLoading(true);
-		setMessage('');
 		const fetchData = async () => {
 			try {
 				const params = {
@@ -35,9 +35,10 @@ const WeekendRentals = () => {
 					params,
 				});
 				setRentals(response.data.data);
+				setLoading(false);
 			} catch (error) {
 				setError(true);
-				setMessage(`Error: ${error}`);
+				console.error(error);
 				setLoading(false);
 			}
 		};
@@ -54,7 +55,20 @@ const WeekendRentals = () => {
 				</h2>
 				<p>Instantly book with one of these highly rated RVs in your area!</p>
 			</div>
-			<WeekendRentalList rentals={rentals} />
+			{loading ? (
+				<div className='lg:w-2/3 flex justify-center md:pr-16 2xl:pr-36'>
+					<LoadSpinner />
+				</div>
+			) : rentals.length > 0 ? (
+				<WeekendRentalList rentals={rentals} />
+			) : (
+				<div className='lg:w-2/3 flex justify-center md:pr-16 2xl:pr-36 text-center'>
+					<p>Darn! No rentals available this weekend :(</p>
+					<p>
+						Try refining your search <Link href='/rentals'>here</Link>
+					</p>
+				</div>
+			)}
 		</section>
 	);
 };

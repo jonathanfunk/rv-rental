@@ -1,16 +1,16 @@
+import type { Metadata } from 'next';
 import RentalListContent from '@/components/RentalListContent';
 import Image from 'next/image';
+import rvRentalSearchHeroBg from '../../../public/images/rv-rental-search-hero-bg.webp';
 
-export const metadata = {
-	title: 'RV Rentals | Search',
-	description:
-		'I create minimalistic websites that prioritize ease of use and performance. Send an email to jon.m.funk@gmail.com to get started!',
+export const metadata: Metadata = {
+	title: 'Search | RV Rentals',
+	description: 'Discover Your Dream RV Rental!',
 	openGraph: {
-		title: 'RV Rentals | Search',
-		description:
-			'I create minimalistic websites that prioritize ease of use and performance. Send an email to jon.m.funk@gmail.com to get started!',
+		title: 'Search | RV Rentals',
+		description: 'Discover Your Dream RV Rental!',
 		url: 'https://www.jonathanfunk.ca',
-		siteName: 'RV Rentals | Search',
+		siteName: 'Search | RV Rentals',
 		images: [
 			{
 				url: 'https://www.jonathanfunk.ca/images/mobile-mocks.webp',
@@ -28,11 +28,12 @@ const Rental = () => {
 		<>
 			<section className='section bg-emerald-900 bg-opacity-30 relative'>
 				<Image
-					src='/images/rv-rental-search-hero-bg.webp'
+					src={rvRentalSearchHeroBg}
 					alt='RV on the road'
 					fill
 					sizes='100vw'
 					className='absolute top-0 left-0 h-full w-full object-cover z-[-1]'
+					placeholder='blur'
 					priority
 				/>
 				<h1 className='mb-0 mt-28'>Discover Your Dream RV Rental</h1>

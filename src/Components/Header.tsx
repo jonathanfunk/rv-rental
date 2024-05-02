@@ -1,5 +1,4 @@
 'use client';
-import { Fragment } from 'react';
 import { Logo } from '@/components/Icons';
 import CurrencyDropDown from './CurrencyDropDown';
 import Link from 'next/link';

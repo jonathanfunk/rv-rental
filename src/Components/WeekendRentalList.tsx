@@ -1,4 +1,3 @@
-import axios from 'axios';
 import RentalCard from './RentalCard';
 import Carousel from './Carousel';
 import { WeekendRentalListProps } from '@/lib/types';

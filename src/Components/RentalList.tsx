@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import RentalCard from './RentalCard';
+import LoadSpinner from './LoadSpinner';
 import { GlobalContext } from '@/context/GlobalState';
 import { RentalData, RentalListProps, VehicleType } from '@/lib/types';
 
@@ -16,19 +17,15 @@ const RentalList = ({
 	maxPrice,
 }: RentalListProps) => {
 	const [rentals, setRentals] = useState<RentalData[]>([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	const [message, setMessage] = useState('');
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state, dispatch } = useContext(GlobalContext);
 	const { currency, totalResults } = state;
 
-	console.log(rentals);
-
 	useEffect(() => {
 		setError(false);
 		setLoading(true);
-		setMessage('');
 		const fetchData = async () => {
 			if (address !== null) {
 				try {
@@ -54,9 +51,10 @@ const RentalList = ({
 					fetchClasses(response.data.meta.vehicle_types);
 					fetchMinPrice(response.data.meta.price_min);
 					fetchMaxPrice(response.data.meta.price_max);
+					setLoading(false);
 				} catch (error) {
 					setError(true);
-					setMessage(`Error: ${error}`);
+					console.error(error);
 					setLoading(false);
 				}
 			}
@@ -86,30 +84,32 @@ const RentalList = ({
 
 	return (
 		<>
-			<p className='text-xl mb-8'>
-				{totalResults
-					? `Total Results: ${totalResults}`
-					: 'No results. Try refining your filters.'}
-			</p>
-			<div className=' mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
-				{rentals.map((rental, i) => (
-					<RentalCard
-						key={i}
-						id={rental.id}
-						image={rental.attributes.primary_image_url}
-						title={rental.attributes.vehicle_title}
-						type={rental.attributes.display_vehicle_type}
-						sleeps={rental.attributes.sleeps}
-						city={rental.attributes.location.city}
-						state={rental.attributes.location.state}
-						price={rental.attributes.price_per_day}
-						score={rental.attributes.score}
-						currency={rental.attributes.presentment_currency}
-						startDate={startDate}
-						endDate={endDate}
-					/>
-				))}
-			</div>
+			{loading ? (
+				<LoadSpinner />
+			) : (
+				<>
+					<p className='text-xl mb-8'>Total Results: {totalResults}</p>
+					<div className=' mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+						{rentals.map((rental, i) => (
+							<RentalCard
+								key={i}
+								id={rental.id}
+								image={rental.attributes.primary_image_url}
+								title={rental.attributes.vehicle_title}
+								type={rental.attributes.display_vehicle_type}
+								sleeps={rental.attributes.sleeps}
+								city={rental.attributes.location.city}
+								state={rental.attributes.location.state}
+								price={rental.attributes.price_per_day}
+								score={rental.attributes.score}
+								currency={rental.attributes.presentment_currency}
+								startDate={startDate}
+								endDate={endDate}
+							/>
+						))}
+					</div>
+				</>
+			)}
 		</>
 	);
 };
