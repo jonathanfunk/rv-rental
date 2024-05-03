@@ -18,6 +18,7 @@ const SearchForm = ({
 	defaultStartDate,
 	defaultEndDate,
 	defaultGuests,
+	defaultType,
 }: SearchProps) => {
 	const { state } = useContext(GlobalContext);
 	const { currency, classes, minPrice, maxPrice } = state;
@@ -29,9 +30,9 @@ const SearchForm = ({
 	});
 
 	const [guests, setGuests] = useState(defaultGuests);
-	const [selectedClasses, setSelectedClasses] = useState<PrevSelectedClasses>(
-		{}
-	);
+	const [selectedClasses, setSelectedClasses] = useState<PrevSelectedClasses>({
+		[defaultType]: true,
+	});
 	const [isOpen, setIsOpen] = useState(false);
 	const minPriceDollars = priceInDollars(minPrice);
 	const maxPriceDollars = priceInDollars(maxPrice);
@@ -93,7 +94,7 @@ const SearchForm = ({
 	return (
 		<div className='bg-gray-50 justify-center items-center w-full lg:p-5 lg:z-0 lg:static lg:flex lg:px-10 lg:py-7'>
 			<form
-				className='hidden md:flex justify-center gap-3 items-center w-full'
+				className='hidden lg:flex justify-center gap-3 items-center w-full'
 				onSubmit={handleSubmit}
 			>
 				<div className='items-center w-2/3 flex'>

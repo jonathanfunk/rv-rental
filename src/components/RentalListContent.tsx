@@ -66,6 +66,7 @@ const RentalListContent = () => {
 				defaultStartDate={searchParams.get('startdate') ?? ''}
 				defaultEndDate={searchParams.get('enddate') ?? ''}
 				defaultGuests={searchParams.get('guests') ?? ''}
+				defaultType={searchParams.get('types') ?? ''}
 			/>
 
 			<section className='section' id='rental-list'>

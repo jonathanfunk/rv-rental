@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import RentalCard from './RentalCard';
-import LoadSpinner from './LoadSpinner';
+import RentalCardPlaceholder from './RentalCardPlaceholder';
 import { GlobalContext } from '@/context/GlobalState';
 import { RentalData, RentalListProps, VehicleType } from '@/lib/types';
 
@@ -22,6 +22,7 @@ const RentalList = ({
 	const BASE_URL = process.env.NEXT_PUBLIC_BASE_SEARCH_URL;
 	const { state, dispatch } = useContext(GlobalContext);
 	const { currency, totalResults } = state;
+	const placeholders = new Array(12).fill(null);
 
 	useEffect(() => {
 		setError(false);
@@ -85,7 +86,14 @@ const RentalList = ({
 	return (
 		<>
 			{loading ? (
-				<LoadSpinner />
+				<>
+					<p className='text-xl mb-8'>Loading...</p>
+					<div className='mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
+						{placeholders.map((_, i) => (
+							<RentalCardPlaceholder key={i} />
+						))}
+					</div>
+				</>
 			) : (
 				<>
 					<p className='text-xl mb-8'>Total Results: {totalResults}</p>

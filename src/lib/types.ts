@@ -95,6 +95,7 @@ export type SearchProps = {
 	defaultStartDate: string;
 	defaultEndDate: string;
 	defaultGuests: string;
+	defaultType: string;
 };
 
 export type InitialState = {
