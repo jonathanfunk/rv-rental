@@ -35,7 +35,7 @@ const RentalCard = ({
 			className={`group w-[calc(100%-12px)] max-w-full min-h-[calc(100%-12px)] rounded-[40px] border-solid border-2 border-emerald-950 shadow-solid overflow-hidden mr-8 mb-3 ${classes}`}
 		>
 			<div>
-				<div className='h-[225px] md:h-[320px] bg-emerald-950 relative overflow-hidden'>
+				<div className='h-[200px] md:h-[320px] bg-emerald-950 relative overflow-hidden'>
 					<Image
 						src={imageUrl}
 						width={500}

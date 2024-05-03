@@ -25,10 +25,10 @@ const HowItWorks = () => {
 				<div className='grid lg:grid-cols-3 gap-8 pr-3'>
 					{steps.map((step, i) => (
 						<div
-							className='p-12 md:px-20 md:py-11 rounded-[40px] border-2 border-emerald-950 shadow-solid flex flex-col gap-7'
+							className='p-6 rounded-[40px] border-2 border-emerald-950 shadow-solid flex flex-col gap-5 md:px-20 md:py-11 md:gap-7'
 							key={i}
 						>
-							<div className=' h-20 w-20 bg-emerald-900 flex justify-center items-center rounded-full'>
+							<div className='h-20 w-20 bg-emerald-900 flex justify-center items-center rounded-full'>
 								{step.icon}
 							</div>
 

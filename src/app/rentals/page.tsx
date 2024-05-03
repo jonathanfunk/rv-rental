@@ -37,7 +37,9 @@ const Rental = () => {
 					placeholder='blur'
 					priority
 				/>
-				<h1 className='mb-0 mt-28'>Discover Your Dream RV Rental</h1>
+				<div className='px-8'>
+					<h1 className='mb-0 mt-28'>Discover Your Dream RV Rental</h1>
+				</div>
 			</section>
 			<Suspense>
 				<RentalListContent />

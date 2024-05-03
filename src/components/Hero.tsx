@@ -5,7 +5,7 @@ import rvRentalHeroBg from '../../public/images/rv-rental-hero-bg.webp';
 
 const Hero = () => {
 	return (
-		<section className='bg-emerald-900 bg-opacity-30 h-screen relative flex items-end justify-center pb-8 md:pb-28'>
+		<section className='bg-emerald-900 bg-opacity-30 min-h-screen relative flex items-end justify-center pt-40 pb-8 md:pb-28'>
 			<Image
 				src={rvRentalHeroBg}
 				alt='RV on the beach'
