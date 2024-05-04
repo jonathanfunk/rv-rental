@@ -1,6 +1,7 @@
 'use client';
 import { Logo } from '@/components/Icons';
 import CurrencyDropDown from './CurrencyDropDown';
+import MobileMenu from './MobileMenu';
 import Link from 'next/link';
 
 const Header = () => {
@@ -14,12 +15,16 @@ const Header = () => {
 				>
 					<Logo className='fill-current h-11 w-11 md:h-20 md:w-20' />
 				</Link>
-				<nav className='flex justify-between items-center gap-3 md:gap-8'>
+				<nav className='hidden justify-between items-center gap-8 lg:flex'>
+					<Link className='text-xl' href='/faves'>
+						Faves
+					</Link>
 					<CurrencyDropDown />
 					<Link href='/rentals' className='btn'>
 						Check Availabililty
 					</Link>
 				</nav>
+				<MobileMenu />
 			</div>
 		</div>
 	);

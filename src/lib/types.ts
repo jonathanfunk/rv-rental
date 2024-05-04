@@ -39,7 +39,7 @@ export type WeekendRentalListProps = {
 };
 
 export type RentalCardProps = {
-	id: id;
+	id: string | number;
 	title: string;
 	startDate: DateType;
 	endDate: DateType;

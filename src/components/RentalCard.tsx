@@ -44,7 +44,7 @@ const RentalCard = ({
 						alt={title}
 						className='h-full w-full object-cover group-hover:scale-110 transition-transform'
 					/>
-					<div className='absolute top-5 right-5 z-10 w-10 h-10'>
+					<div className='absolute top-5 right-5 w-10 h-10'>
 						<FaveHeart id={id} />
 					</div>
 				</div>

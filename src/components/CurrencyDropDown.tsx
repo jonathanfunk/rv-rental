@@ -14,7 +14,7 @@ const CurrencyDropDown = () => {
 		<Menu as='div' className='relative ml-3'>
 			<div>
 				<Menu.Button
-					className='relative text-base focus:outline-none flex items-center gap-x-1'
+					className='relative text-xl focus:outline-none flex items-center gap-x-1'
 					aria-label='Open user menu'
 					aria-haspopup='true'
 					aria-expanded='false'

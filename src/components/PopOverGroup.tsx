@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
-
-import { Popover, Transition, Dialog } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 type Props = {
