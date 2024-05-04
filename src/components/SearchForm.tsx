@@ -229,7 +229,7 @@ const SearchForm = ({
 									leaveFrom='translate-x-0'
 									leaveTo='translate-x-full'
 								> */}
-							<Dialog.Panel className='bg-white pointer-events-auto overflow-y-auto relative w-screen min-h-screen p-8'>
+							<Dialog.Panel className='bg-white pointer-events-auto overflow-y-auto relative w-screen min-h-screen px-8 pt-8 pb-24'>
 								<form onSubmit={handleSubmit}>
 									<div className='flex flex-col gap-6'>
 										<div className='relative'>
