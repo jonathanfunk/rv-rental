@@ -5,6 +5,7 @@ import RentalCard from './RentalCard';
 import RentalCardPlaceholder from './RentalCardPlaceholder';
 import { GlobalContext } from '@/context/GlobalState';
 import { RentalData, RentalListProps, VehicleType } from '@/lib/types';
+import { sortByLabel } from '@/lib/utils';
 
 const RentalList = ({
 	address,
@@ -50,7 +51,7 @@ const RentalList = ({
 					});
 					setRentals(response.data.data);
 					fetchResults(response.data.meta.total);
-					fetchClasses(response.data.meta.vehicle_types);
+					fetchClasses(sortByLabel(response.data.meta.vehicle_types));
 					fetchMinPrice(response.data.meta.price_min);
 					fetchMaxPrice(response.data.meta.price_max);
 					setLoading(false);

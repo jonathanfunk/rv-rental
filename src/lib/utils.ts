@@ -1,3 +1,5 @@
+import { VehicleType } from './types';
+
 export const getNextFriday = () => {
 	const today = new Date();
 	const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
@@ -90,3 +92,19 @@ export const formatDate = (date: Date): string => {
 };
 
 export const priceInDollars = (price: number) => Math.round(price / 100);
+
+export const capitalizeEachWord = (str: string) => {
+	return str.replace(/\b\w/g, function (char) {
+		return char.toUpperCase();
+	});
+};
+
+export const sortByLabel = (arr: VehicleType[]) => {
+	return arr.sort((a, b) => {
+		const labelA = a.label.toLowerCase();
+		const labelB = b.label.toLowerCase();
+		if (labelA < labelB) return -1;
+		if (labelA > labelB) return 1;
+		return 0;
+	});
+};

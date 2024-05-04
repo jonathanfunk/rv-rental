@@ -8,7 +8,11 @@ import RangeSlider from 'react-range-slider-input';
 import { PrevSelectedClasses, PriceRange, DateRange } from '@/lib/types';
 import { Dialog } from '@headlessui/react';
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/20/solid';
-import { getCurrencySymbol, priceInDollars } from '@/lib/utils';
+import {
+	getCurrencySymbol,
+	priceInDollars,
+	capitalizeEachWord,
+} from '@/lib/utils';
 import { SearchProps } from '@/lib/types';
 import 'react-range-slider-input/dist/style.css';
 
@@ -169,7 +173,7 @@ const SearchForm = ({
 											htmlFor={item.type}
 											className='text-gray-900 text-lg static'
 										>
-											{item.label}
+											{capitalizeEachWord(item.label)}
 										</label>
 									</div>
 								</div>
@@ -303,7 +307,7 @@ const SearchForm = ({
 																htmlFor={item.type}
 																className='text-gray-900 text-base static pl-0'
 															>
-																{item.label}
+																capitalizeEachWord({item.label})
 															</label>
 														</div>
 													</div>
