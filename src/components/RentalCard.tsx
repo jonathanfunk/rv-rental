@@ -45,7 +45,7 @@ const RentalCard = ({
 						className='h-full w-full object-cover group-hover:scale-110 transition-transform'
 					/>
 					<div className='absolute top-5 right-5 w-10 h-10'>
-						<FaveHeart id={Number(id)} />
+						<FaveHeart id={String(id)} />
 					</div>
 				</div>
 				<div className='p-6 md:p-10'>

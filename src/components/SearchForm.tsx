@@ -143,6 +143,7 @@ const SearchForm = ({
 							placeholder='Guests'
 							id='guests'
 							value={guests}
+							min='1'
 							onChange={handleGuestsChange}
 						/>
 						<div className='absolute right-0 top-0 h-full px-3 text-gray-400 flex items-center pr'>
@@ -235,6 +236,7 @@ const SearchForm = ({
 											<label htmlFor='autocomplete'>Location</label>
 											<Autocomplete
 												id='autocomplete'
+												value={address}
 												className='w-full'
 												apiKey={key}
 												onPlaceSelected={(place) =>
@@ -255,6 +257,7 @@ const SearchForm = ({
 												onChange={handleDateChange}
 												primaryColor={'emerald'}
 												useRange={false}
+												showFooter={true}
 												disabledDates={[
 													{
 														startDate: new Date(0).toISOString().split('T')[0],
@@ -274,6 +277,7 @@ const SearchForm = ({
 												placeholder='Guests'
 												id='guests'
 												value={guests}
+												min='1'
 												onChange={handleGuestsChange}
 											/>
 											<div className='absolute right-0 top-0 h-full px-3 text-gray-400 flex items-center pr'>

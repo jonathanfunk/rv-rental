@@ -63,6 +63,7 @@ const HeroSearchForm = () => {
 							onChange={handleDateChange}
 							primaryColor={'emerald'}
 							useRange={false}
+							showFooter={true}
 							disabledDates={[
 								{
 									startDate: new Date(0).toISOString().split('T')[0],
