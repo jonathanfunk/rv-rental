@@ -12,6 +12,17 @@ const reducer = (state: InitialState, action: Action) => {
 			return { ...state, maxPrice: action.payload };
 		case 'FETCH_RESULTS':
 			return { ...state, totalResults: action.payload };
+		case 'DELETE_FAVE':
+			return {
+				...state,
+				faves: state.faves.filter((fave) => fave.id !== action.payload),
+			};
+		case 'ADD_FAVE':
+			return {
+				...state,
+				faves: [...state.faves, action.payload],
+			};
+
 		default:
 			return state;
 	}

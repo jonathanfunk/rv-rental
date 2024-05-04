@@ -1,7 +1,7 @@
 'use client';
-import { createContext, useReducer, ReactNode } from 'react';
+import { createContext, useReducer, ReactNode, useEffect } from 'react';
 import AppReducer from './AppReducer'; // Import the reducer function
-import { InitialState, Action, VehicleType } from '@/lib/types';
+import { InitialState, Action, VehicleType, id } from '@/lib/types';
 
 const initialState: InitialState = {
 	currency: 'CAD',
@@ -65,6 +65,12 @@ const initialState: InitialState = {
 	minPrice: 0,
 	maxPrice: 100000,
 	totalResults: 0,
+	faves:
+		typeof localStorage !== 'undefined'
+			? localStorage.getItem('faves')
+				? JSON.parse(localStorage.getItem('faves')!)
+				: []
+			: [],
 };
 
 // Create context
@@ -78,6 +84,10 @@ export const GlobalProvider = ({
 	children,
 }: Readonly<{ children: ReactNode }>) => {
 	const [state, dispatch] = useReducer(AppReducer, initialState);
+
+	useEffect(() => {
+		localStorage.setItem('faves', JSON.stringify(state.faves));
+	}, [state.faves]);
 
 	// Actions
 	function setCurrency(currency: string) {
@@ -111,6 +121,19 @@ export const GlobalProvider = ({
 		dispatch({
 			type: 'FETCH_RESULTS',
 			payload: totalResults,
+		});
+	}
+
+	function deleteFave(id: id) {
+		dispatch({
+			type: 'DELETE_FAVE',
+			payload: id,
+		});
+	}
+	function addFave(id: id) {
+		dispatch({
+			type: 'ADD_FAVE',
+			payload: id,
 		});
 	}
 

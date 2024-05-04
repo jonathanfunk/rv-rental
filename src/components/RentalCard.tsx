@@ -1,5 +1,6 @@
 import { FaStar } from 'react-icons/fa6';
 import Image from 'next/image';
+import FaveHeart from './FaveHeart';
 import { getCurrencySymbol, priceInDollars } from '@/lib/utils';
 import { RentalCardProps } from '@/lib/types';
 
@@ -43,6 +44,9 @@ const RentalCard = ({
 						alt={title}
 						className='h-full w-full object-cover group-hover:scale-110 transition-transform'
 					/>
+					<div className='absolute top-5 right-5 z-10 w-10 h-10'>
+						<FaveHeart id={id} />
+					</div>
 				</div>
 				<div className='p-6 md:p-10'>
 					<h3 className='text-gray-900 font-semibold mb-4 text-2xl md:text-3xl'>

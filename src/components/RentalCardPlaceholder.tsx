@@ -1,5 +1,3 @@
-import React from 'react';
-
 const RentalCardPlaceholder = ({ classes }: { classes?: string }) => {
 	return (
 		<div

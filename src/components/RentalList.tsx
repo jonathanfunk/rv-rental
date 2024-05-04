@@ -15,6 +15,7 @@ const RentalList = ({
 	offset,
 	minPrice,
 	maxPrice,
+	ids,
 }: RentalListProps) => {
 	const [rentals, setRentals] = useState<RentalData[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -42,8 +43,8 @@ const RentalList = ({
 						'filter[type]': types,
 						'price[min]': minPrice,
 						'price[max]': maxPrice,
+						ids,
 					};
-					console.log('Params...', params);
 					const response = await axios.get(`${BASE_URL}/rentals`, {
 						params,
 					});
@@ -81,6 +82,7 @@ const RentalList = ({
 		offset,
 		minPrice,
 		maxPrice,
+		ids,
 	]);
 
 	return (

@@ -13,8 +13,12 @@ export type DateRange = {
 
 export type PriceRange = [number, number];
 
-export type RentalData = {
+export type id = {
 	id: string | number;
+};
+
+export type RentalData = {
+	id: id;
 	attributes: {
 		vehicle_title: string;
 		display_vehicle_type: string;
@@ -35,7 +39,7 @@ export type WeekendRentalListProps = {
 };
 
 export type RentalCardProps = {
-	id: string | number;
+	id: id;
 	title: string;
 	startDate: DateType;
 	endDate: DateType;
@@ -51,14 +55,15 @@ export type RentalCardProps = {
 };
 
 export type RentalListProps = {
-	address: Address;
+	address?: Address;
 	startDate: DateType;
 	endDate: DateType;
-	guests: string;
-	types: string;
-	offset: number;
-	minPrice: number | null;
-	maxPrice: number | null;
+	guests?: string;
+	types?: string;
+	offset?: number;
+	minPrice?: number | null;
+	maxPrice?: number | null;
+	ids?: string | null;
 };
 
 export type AutoCompleteProps = {
@@ -104,6 +109,7 @@ export type InitialState = {
 	minPrice: number;
 	maxPrice: number;
 	totalResults: number;
+	faves: id[];
 };
 
 export type VehicleType = {
@@ -125,4 +131,6 @@ export type Action =
 	| { type: 'FETCH_CLASSES'; payload: VehicleType[] }
 	| { type: 'FETCH_MIN_PRICE'; payload: number }
 	| { type: 'FETCH_MAX_PRICE'; payload: number }
-	| { type: 'FETCH_RESULTS'; payload: number };
+	| { type: 'FETCH_RESULTS'; payload: number }
+	| { type: 'DELETE_FAVE'; payload: id | string | number }
+	| { type: 'ADD_FAVE'; payload: id };
