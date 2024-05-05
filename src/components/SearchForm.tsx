@@ -307,7 +307,7 @@ const SearchForm = ({
 																htmlFor={item.type}
 																className='text-gray-900 text-base static pl-0'
 															>
-																capitalizeEachWord({item.label})
+																{capitalizeEachWord(item.label)}
 															</label>
 														</div>
 													</div>
