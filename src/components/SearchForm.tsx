@@ -163,7 +163,7 @@ const SearchForm = ({
 											id={item.type}
 											name={item.type}
 											type='checkbox'
-											className='form-checkbox h-4 w-4 rounded-full border-gray-300 checked:bg-emerald-900 focus:ring-emerald-600 focus:checked:bg-emerald-900 checked:hover:bg-emerald-800'
+											className='cursor-pointer form-checkbox h-4 w-4 rounded-full border-gray-300 checked:bg-emerald-900 focus:ring-emerald-600 focus:checked:bg-emerald-900 checked:hover:bg-emerald-800'
 											checked={selectedClasses[item.type] || false}
 											onChange={() => handleClassesChange(item.type)}
 										/>
@@ -171,7 +171,7 @@ const SearchForm = ({
 									<div className='text-sm leading-6'>
 										<label
 											htmlFor={item.type}
-											className='text-gray-900 text-lg static'
+											className=' cursor-pointer text-gray-900 text-lg static pl-0'
 										>
 											{capitalizeEachWord(item.label)}
 										</label>
