@@ -99,7 +99,11 @@ const RentalList = ({
 				</>
 			) : (
 				<>
-					<p className='text-xl mb-8'>Total Results: {totalResults}</p>
+					<p className='text-xl mb-8'>
+						{totalResults > 0
+							? `Total Results: ${totalResults}`
+							: 'Sorry, no results found. Please try adjusting your search criteria or exploring a different area.'}
+					</p>
 					<div className=' mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
 						{rentals.map((rental, i) => (
 							<RentalCard

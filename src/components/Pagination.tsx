@@ -36,27 +36,33 @@ const Pagination = ({
 	const endRange = Math.min(currentPage * pageLimit, totalResults);
 
 	return (
-		<div className='py-3 md:flex md:justify-between text-base'>
-			<p className=' text-center mb-3 md:mb-0 md:text-left'>
-				Showing {startRange} to {endRange} of {totalResults}
-			</p>
-			<nav className='flex justify-center gap-3'>
-				<button
-					onClick={handlePrevPage}
-					disabled={currentPage === 1}
-					className='border border-gray-200 rounded-full px-3 py-2'
-				>
-					Previous
-				</button>
-				<button
-					onClick={handleNextPage}
-					disabled={currentPage === totalPages}
-					className='border border-gray-200 rounded-full px-3 py-2'
-				>
-					Next
-				</button>
-			</nav>
-		</div>
+		<>
+			{totalResults > 0 ? (
+				<div className='py-3 md:flex md:justify-between text-base'>
+					<p className=' text-center mb-3 md:mb-0 md:text-left'>
+						Showing {startRange} to {endRange} of {totalResults}
+					</p>
+					<nav className='flex justify-center gap-3'>
+						<button
+							onClick={handlePrevPage}
+							disabled={currentPage === 1}
+							className='border border-gray-200 rounded-full px-3 py-2'
+						>
+							Previous
+						</button>
+						<button
+							onClick={handleNextPage}
+							disabled={currentPage === totalPages}
+							className='border border-gray-200 rounded-full px-3 py-2'
+						>
+							Next
+						</button>
+					</nav>
+				</div>
+			) : (
+				''
+			)}
+		</>
 	);
 };
 
